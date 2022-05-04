@@ -1,0 +1,60 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Dev",
+			"dependsOn": [
+				"DB",
+				"Svelte dev",
+			],
+			"dependsOrder": "sequence",
+			"problemMatcher": []
+		},
+		{
+			"type": "npm",
+			"script": "db:init",
+			"problemMatcher": [],
+			"label": "DB init",
+		},
+		{
+			"type": "npm",
+			"script": "db",
+			"problemMatcher": {
+				"pattern": {
+					"regexp": ""
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "Starting...",
+					"endsPattern": "FaunaDB is ready."
+				}
+			},
+			"label": "DB",
+			"isBackground": true
+		},
+		{
+			"type": "npm",
+			"script": "dev",
+			"problemMatcher": {
+				"pattern": {
+					"regexp": ""
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "SvelteKit",
+					"endsPattern": "http://localhost:3000"
+				}
+			},
+			"label": "Svelte dev",
+			"isBackground": true
+		},
+		{
+			"type": "npm",
+			"script": "test:dev",
+			"problemMatcher": [],
+			"label": "End-to-end",
+		}
+	]
+}
