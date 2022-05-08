@@ -29,6 +29,6 @@
 	}}
 >
 	<!-- TODO: Hardcode a few different placeholder names to select at random. -->
-	<input autofocus id="name" name="name" placeholder="Sir Guzzlington IV"> 
+	<input autofocus id="name" name="name"> 
 	<Onward/>
 </form>

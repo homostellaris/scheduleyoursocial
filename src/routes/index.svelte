@@ -30,7 +30,7 @@
 	}}
 >
 	<!-- TODO: Hardcode a few different placeholder names to select at random. -->
-	<input autofocus id="name" name="name" placeholder="Sir Guzzlington IV"> 
+	<input autofocus id="name" name="name"> 
 	<Onward/>
 </form>
 <!-- TODO: Can I do a sweet transition from this page to the next? -->
