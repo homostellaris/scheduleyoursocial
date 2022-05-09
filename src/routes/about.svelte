@@ -19,6 +19,6 @@
 </svelte:head>
 
 <h1>The fastest way to find out when your friends are free</h1>
-<p>Trying to find a date when friends are free is can be a painful process, especially over text. We save you time by collecting everyone's availability and presenting you with the best dates with a minimum of fuss.</p>
+<p>Trying to find a day when friends are free to meet can be a painful process, especially over text. We save you time by collecting everyone's availability and presenting you with the best dates with a minimum of fuss.</p>
 
 <!-- TODO: Add product hunt widgets -->
