@@ -3,8 +3,8 @@
 </script>
 
 <svelte:head>
-	<title>No signup. No ads. The free, fast, and fun way to agree a day for your social.</title>
-	<meta name="description" content="Schedule Your Social is the social planning app that requires no signup, is ad-free, and fast! We help you find a day for your social in minutes.">
+	<title>No signup. No ads. Free.</title>
+	<meta name="description" content="Schedule Your Social is the social planning app that has no signup, ads, and is completely free. We help you find a day for your social in minutes.">
 </svelte:head>
 
 <h1>Schedule Your Social</h1>
