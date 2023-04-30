@@ -3,7 +3,8 @@
 </script>
 
 <svelte:head>
-	<title>Alternative to Howbout</title>
+	<title>A simple, fast, alternative to Howbout</title>
+	<meta name="description" content="Schedule Your Social is similar to other social planning apps like Howbout. However we solve a slightly different use case to Howbout and differ in a few key ways.">
 </svelte:head>
 
 <h2>Schedule Your Social is similar to other social planning apps like Howbout</h2>
