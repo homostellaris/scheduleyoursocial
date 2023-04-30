@@ -3,8 +3,8 @@
 </script>
 
 <svelte:head>
-	<title>Doodle without the ads</title>
-	<meta name="description" content="Schedule Your Social is similar to other social planning apps like Doodle. However we solve a slightly different use case to Doodle and differ in a few key ways.">
+	<title>Doodle without ads</title>
+	<meta name="description" content="Does the same job as Doodle but without any ads and completely free. Schedule Your Social is the fastest way to find a date that works for everyone.">
 </svelte:head>
 
 <h2>Schedule Your Social is similar to other social planning apps like Doodle</h2>

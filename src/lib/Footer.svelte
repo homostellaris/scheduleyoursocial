@@ -1,4 +1,3 @@
-
 <footer>
 	<!-- TODO: Use something like `class:active={$page.path === '/about'}` to indicate which page we're currently on. -->
 	<span><a sveltekit:prefetch href="/">Schedule another social</a></span>
