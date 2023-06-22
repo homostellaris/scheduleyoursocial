@@ -1,4 +1,5 @@
 # Getting started
+
 1. `cp .env.template .env`
 2. `npm run dev`
 3. `npm run db:init`
