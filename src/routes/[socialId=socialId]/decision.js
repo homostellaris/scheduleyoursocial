@@ -1,5 +1,5 @@
 import faunadb from 'faunadb'
-import {toDatabaseId} from '$lib/id'
+import { toDatabaseId } from '$lib/id'
 import convertDatesToStrings from '$lib/convertDatesToStrings'
 
 const q = faunadb.query
@@ -11,7 +11,7 @@ const client = new faunadb.Client({
 	secret: process.env.FAUNADB_SERVER_SECRET,
 })
 
-export async function get ({params, locals}) {
+export async function get ({ params, locals }) {
 	const socialId = params.socialId
 	const reference = toDatabaseId(socialId)
 	const response = await client.query(
@@ -20,7 +20,7 @@ export async function get ({params, locals}) {
 	const social = convertDatesToStrings(response.data)
 	social.decision = social.decision.value
 	const user = social.invitees[locals.userId]
-	
+
 	return {
 		status: 200,
 		body: {

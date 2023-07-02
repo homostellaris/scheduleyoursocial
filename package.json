@@ -7,7 +7,7 @@
     "dev": "./habitat.sh svelte-kit dev",
     "db": "docker run --rm --name faunadb -p 8443:8443 -v scheduleyoursocial:/var/lib/faunadb fauna/faunadb",
     "db:init": "./habitat.sh fauna eval --file db/init.fql --secret $FAUNADB_SERVER_SECRET --port $FAUNADB_PORT --scheme $FAUNADB_SCHEME --domain $FAUNADB_DOMAIN",
-    "getAllSocials": "fauna eval --file db/get-all-socials.fql | jq",
+    "getAllSocials": "./habitat.sh fauna eval --file db/get-all-socials.fql --secret $FAUNADB_SERVER_SECRET --port $FAUNADB_PORT --scheme $FAUNADB_SCHEME --domain $FAUNADB_DOMAIN | jq",
     "package": "svelte-kit package",
     "postinstall": "patch-package",
     "preview": "svelte-kit preview",
@@ -33,9 +33,11 @@
     "@lukeed/uuid": "^2.0.0",
     "@sentry/browser": "^6.19.1",
     "@sentry/tracing": "^6.19.1",
+    "@sindresorhus/string-hash": "^2.0.0",
     "cookie": "^0.4.1",
     "faunadb": "^4.5.2",
     "plausible-tracker": "^0.3.5",
-    "praecox-datepicker": "^1.1.7"
+    "praecox-datepicker": "^1.1.7",
+    "web-push": "^3.6.3"
   }
 }

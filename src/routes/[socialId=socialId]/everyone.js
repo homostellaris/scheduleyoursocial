@@ -1,5 +1,6 @@
 import faunadb from 'faunadb'
-import {toDatabaseId} from '$lib/id'
+import { toDatabaseId } from '$lib/id'
+import notification from '$lib/server/notification'
 import convertDatesToStrings from '$lib/convertDatesToStrings'
 
 const q = faunadb.query
@@ -11,7 +12,7 @@ const client = new faunadb.Client({
 	secret: process.env.FAUNADB_SERVER_SECRET,
 })
 
-export async function get ({params, locals}) {
+export async function get ({ params, locals }) {
 	const socialId = params.socialId
 	const reference = toDatabaseId(socialId)
 	const response = await client.query(
@@ -20,7 +21,7 @@ export async function get ({params, locals}) {
 	const social = convertDatesToStrings(response.data)
 	if (social.decision) social.decision = social.decision.value
 	const user = social.invitees[locals.userId]
-	
+
 	return {
 		status: 200,
 		body: {
@@ -30,13 +31,13 @@ export async function get ({params, locals}) {
 	}
 }
 
-export async function patch ({params, request}) {
+export async function patch ({ locals, params, request }) {
 	const socialId = params.socialId
 	const reference = toDatabaseId(socialId)
 	// TODO: Use FormData instead.
-	const {decision} = await request.json()
+	const { decision } = await request.json()
 
-	await client.query(
+	const { data: social } = await client.query(
 		q.Update(
 			q.Ref(q.Collection('social'), reference),
 			{
@@ -45,6 +46,20 @@ export async function patch ({params, request}) {
 				}
 			}
 		)
+	)
+
+	const notAttendingInvitees = Object.values(social.invitees).filter(invitee => !invitee.dates.map(date => date.value).includes(decision))
+	const notAttendingNames = notAttendingInvitees.map(invitee => invitee.name)
+	const body = notAttendingInvitees.length === 0 ? `All ${Object.values(social.invitees).length} people are able to attend.` : `${Object.values(social.invitees).length - notAttendingNames.length} out of ${Object.values(social.invitees).length} can attend; ${notAttendingNames.join(', ')} can't make it.`
+
+	notification.send(
+		social,
+		locals.userId,
+		{
+			title: `You're social is on ${new Date(decision).toLocaleDateString()}.`,
+			body,
+			socialUrl: `${request.headers.get('origin')}/${socialId}/decision`
+		}
 	)
 
 	return {

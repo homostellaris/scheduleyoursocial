@@ -1,5 +1,6 @@
 import faunadb from 'faunadb'
-import {toDatabaseId} from '$lib/id'
+import { toDatabaseId } from '$lib/id'
+import notification from '$lib/server/notification'
 
 const q = faunadb.query
 
@@ -10,16 +11,15 @@ const client = new faunadb.Client({
 	secret: process.env.FAUNADB_SERVER_SECRET,
 })
 
-export async function post ({locals, params, request}) {
+export async function post ({ locals, params, request }) {
 	const socialId = params.socialId
 	const reference = toDatabaseId(socialId)
 
 	const data = await request.formData()
-	console.log(data)
 	const name = data.get('name')
 
 
-	await client.query(
+	const { data: social } = await client.query(
 		q.Update(
 			q.Ref(q.Collection('social'), reference),
 			{
@@ -32,6 +32,16 @@ export async function post ({locals, params, request}) {
 				}
 			}
 		)
+	)
+
+	notification.send(
+		social,
+		locals.userId,
+		{
+			title: `${name} joined the social`,
+			body: `That makes ${Object.keys(social.invitees).length} so far.`,
+			socialUrl: `${request.headers.get('origin')}/${socialId}/everyone`
+		}
 	)
 
 	return {

@@ -1,6 +1,6 @@
 import faunadb from 'faunadb'
+import stringHash from '@sindresorhus/string-hash'
 import { toDatabaseId } from '$lib/id'
-import convertDatesToStrings from '$lib/convertDatesToStrings'
 
 const q = faunadb.query
 
@@ -11,29 +11,11 @@ const client = new faunadb.Client({
 	secret: process.env.FAUNADB_SERVER_SECRET,
 })
 
-export async function get ({ params, locals }) {
+export async function post ({ locals, params, request }) {
 	const socialId = params.socialId
 	const reference = toDatabaseId(socialId)
-	const response = await client.query(
-		q.Get(q.Ref(q.Collection('social'), reference))
-	)
-	const social = convertDatesToStrings(response.data)
-	const user = social.invitees[locals.userId]
-
-	return {
-		status: 200,
-		body: {
-			social,
-			user,
-		}
-	}
-}
-
-export async function put ({ locals, params, request }) {
-	const socialId = params.socialId
-	const reference = toDatabaseId(socialId)
-
-	const { dates } = await request.json()
+	// TODO: Use FormData instead.
+	const { push } = await request.json()
 
 	await client.query(
 		q.Update(
@@ -42,7 +24,37 @@ export async function put ({ locals, params, request }) {
 				data: {
 					invitees: {
 						[locals.userId]: {
-							dates: dates.map(date => q.Date(new Date(date).toISOString().split('T')[0]))
+							pushSubscriptions: {
+								[stringHash(push.endpoint)]: push
+							}
+						}
+					}
+				}
+			}
+		)
+	)
+
+	return {
+		status: 200,
+	}
+}
+
+export async function del ({ locals, params, request }) {
+	const socialId = params.socialId
+	const reference = toDatabaseId(socialId)
+	// TODO: Use FormData instead.
+	const { push } = await request.json()
+
+	await client.query(
+		q.Update(
+			q.Ref(q.Collection('social'), reference),
+			{
+				data: {
+					invitees: {
+						[locals.userId]: {
+							pushSubscriptions: {
+								[stringHash(push.endpoint)]: null
+							}
 						}
 					}
 				}
