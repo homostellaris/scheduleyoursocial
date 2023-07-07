@@ -33,7 +33,7 @@ function subscribe () {
 		.then((registration) => {
 			const subscribeOptions = {
 				userVisibleOnly: true,
-				applicationServerKey: 'BGg9c5r6Yw0HRwFTRNfXyB2I1Nq1na4yUNc36o4VHfYOVUaJKhtvO3VGbbRW2TuV9xN7QwvqLDV-9xZ9NLvOG94',
+				applicationServerKey: 'BIJTw4YGppJBHll2m7OTLZ1Sj44nlAmwgZt-nr3qbciS_QsbSNlGRh1fjpMjmWyZ8hpeBa0w2wUIJMb3LNBP0K4',
 			};
 
 			return registration.pushManager.subscribe(subscribeOptions);
