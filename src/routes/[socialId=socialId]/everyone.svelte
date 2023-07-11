@@ -20,7 +20,7 @@
   let invitees
   let inviteesCount
   // let dates
-  let decision = social.decision ? social.decision : null
+  let decision = social.decision || null
   let status = "Not started"
 
   $: invitees = social.invitees
@@ -57,8 +57,9 @@
         .on("version", version => {
           social = convertDatesToStrings(version.document.data)
 
-          const decisionUpdated = social.decision && social.decision !== decision
-          if (decisionUpdated) goto("decision")
+          const newDecision =
+            social.decision && social.decision.value !== sessionStorage.getItem("decisionSeen")
+          if (newDecision) goto("decision")
 
           status = "📡 Updated: someone joined the party!"
         })
