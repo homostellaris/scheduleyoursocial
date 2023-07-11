@@ -1,5 +1,5 @@
 import faunadb from 'faunadb'
-import {toSocialId} from '../src/lib/id.js'
+import { toSocialId } from '../src/lib/id.js'
 
 const q = faunadb.query
 
@@ -71,4 +71,4 @@ const response = await client.query(
 	)
 )
 const socialId = toSocialId(response.ref.id)
-console.log(`http://localhost:3000/${socialId}/everyone`)
+console.info(`http://localhost:3000/${socialId}/everyone`)

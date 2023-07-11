@@ -3,11 +3,11 @@ const sw = self
 
 sw.addEventListener('install', event => {
 	sw.skipWaiting();
-	console.log('Installing…');
+	console.info('Installing…');
 });
 
 sw.addEventListener('activate', event => {
-	console.log('Service worker activated!');
+	console.info('Service worker activated!');
 });
 
 sw.addEventListener('push', event => {

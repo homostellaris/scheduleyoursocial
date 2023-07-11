@@ -1,8 +1,8 @@
 import cookie from 'cookie'
 import { v4 as uuid } from '@lukeed/uuid'
 
-export async function handle ({event, resolve}) {
-	console.log('handle')
+export async function handle ({ event, resolve }) {
+	console.info('handle')
 	const cookieHeader = event.request.headers.get('cookie')
 	const cookies = cookie.parse(cookieHeader || '')
 	event.locals.userId = cookies.userId || uuid()
@@ -27,7 +27,7 @@ export async function handle ({event, resolve}) {
 };
 
 export function getSession (event) {
-	console.log('getSession');
+	console.info('getSession');
 	return {
 		userId: event.locals.userId,
 		faunadb: {

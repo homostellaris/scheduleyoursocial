@@ -38,8 +38,6 @@
   let pushPermission
   let pushSubscription
 
-  console.log(social)
-
   onMount(async () => {
     const q = faunadb.query
     const client = new faunadb.Client({...$session.faunadb})
@@ -49,7 +47,7 @@
 
     let stream
 
-    console.log("Streaming social", databaseId)
+    console.info("Streaming social", databaseId)
     const startStream = () => {
       stream = client.stream
         .document(docRef)
