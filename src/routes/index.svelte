@@ -1,36 +1,58 @@
 <script context="module">
-	import {goto} from '$app/navigation'
-	import Onward from '$lib/Next.svelte'
+  import {Form, Input, Progress} from "spaper"
+  import {goto} from "$app/navigation"
+  import Next from "$lib/Next.svelte"
 
-	export const prerender = true
+  export const prerender = true
+</script>
+
+<script>
+  let loading
 </script>
 
 <svelte:head>
-	<title>The fastest way to find out when your friends are free</title>
+  <title>The fastest way to find out when your friends are free</title>
 </svelte:head>
 
-<h2>The fastest way to find out when your friends are free</h2>
+<h1>The fastest way to find out when your friends are free</h1>
 <p>Let's start with your name</p>
+
 <!-- svelte-ignore missing-declaration -->
-<form
-	on:submit|preventDefault={async e => {
-		const formData = new FormData(e.target)
-		const name = formData.get('name')
+<Form
+  on:submit={async e => {
+    loading = true
 
-		const response = await fetch(
-			'/create.json',
-			{
-				method: 'POST',
-				body: formData
-			}
-		)
+    try {
+      const formData = new FormData(e.target)
+      const name = formData.get("name")
 
-		const socialId = await response.text()
-		await goto(`/${socialId}/you?name=${name}`)
-	}}
+      const response = await fetch("/create.json", {
+        method: "POST",
+        body: formData,
+      })
+
+      const socialId = await response.text()
+      await goto(`/${socialId}/you?name=${name}`)
+    } finally {
+      loading = false
+    }
+  }}
 >
-	<!-- TODO: Hardcode a few different placeholder names to select at random. -->
-	<input autofocus id="name" name="name">
-	<Onward/>
-</form>
+  <Input class="margin-bottom-small" name="name" />
+  <Next disabled={loading} />
+  <div>
+    <Progress style={`visibility: ${loading ? "visible" : "hidden"};`} infinite striped />
+  </div>
+</Form>
+
 <!-- TODO: Can I do a sweet transition from this page to the next? -->
+
+<style>
+  h1 {
+    font-size: 2.59em;
+  }
+
+  p {
+    font-size: 1.5rem;
+  }
+</style>

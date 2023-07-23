@@ -1,14 +1,16 @@
-<script>
-	export let disabled
-	export let form
+<script context="module">
+  import {Button} from "spaper"
 </script>
 
+<script>
+  export let disabled
+  export let form
+</script>
 
-<button class="next" {disabled} form={form} type="submit">NEXT</button>
+<span><Button {disabled} {form} type="success" nativeType="submit">NEXT</Button></span>
 
 <style>
-	.next {
-		background-color: greenyellow;
-		min-width: 3rem;
-	}
+  span {
+    margin-left: 0.5rem;
+  }
 </style>

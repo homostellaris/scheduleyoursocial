@@ -1,14 +1,14 @@
+<script context="module">
+  import {Button} from "spaper"
+</script>
+
 <script>
-	export let back
+  export let back
 </script>
 
 <a href={back}>
-	<button class="retreat">BACK</button>
+  <Button class="retreat" type="danger">BACK</Button>
 </a>
 
 <style>
-	.retreat {
-		background-color: red;
-		min-width: 3rem;
-	}
 </style>

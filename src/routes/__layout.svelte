@@ -1,20 +1,22 @@
 <script context="module">
-  import {dev} from '$app/env'
-  import '../app.css'
-  import Footer from '$lib/Footer.svelte'
-  import {onMount, setContext} from 'svelte'
-  import Plausible from 'plausible-tracker'
-  import * as Sentry from '@sentry/browser'
-  import {BrowserTracing} from '@sentry/tracing'
-  import Bubbles from '$lib/Bubbles/index.svelte'
+  import {dev} from "$app/env"
+  import "../app.css"
+  import "../papercss-overrides.css"
+  import "papercss/dist/paper.min.css"
+  import Footer from "$lib/Footer.svelte"
+  import {onMount, setContext} from "svelte"
+  import Plausible from "plausible-tracker"
+  import * as Sentry from "@sentry/browser"
+  import {BrowserTracing} from "@sentry/tracing"
+  import Bubbles from "$lib/Bubbles/index.svelte"
 
-	export const prerender = true
+  export const prerender = true
 </script>
 
 <script>
   let plausible
-  setContext('analytics', {
-    getAnalytics: () => plausible
+  setContext("analytics", {
+    getAnalytics: () => plausible,
   })
 
   onMount(() => {
@@ -29,10 +31,10 @@
     plausible = Plausible()
     plausible.enableAutoPageviews()
     plausible.enableAutoOutboundTracking()
-  });
+  })
 </script>
 
-<Bubbles/>
+<Bubbles />
 <div class="container">
   <main>
     <slot />
@@ -43,7 +45,18 @@
 <style>
   :root {
     --beer: #e87c00;
+    --good: #adff2f;
+    --bad: red;
     --white: #fff;
+    --purple: rgb(85, 26, 139);
+    --pink: rgba(218, 88, 218, 0.747);
+
+    /* Paper CSS overrides */
+    --primary: var(--purple);
+    /* --secondary: var(--pink); */
+    --success: #608d1c;
+    --success-light: var(--good);
+    --main-background: var(--beer);
   }
 
   :global(body) {

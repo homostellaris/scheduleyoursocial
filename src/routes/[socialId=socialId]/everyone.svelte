@@ -1,4 +1,5 @@
 <script>
+  import {Form, Progress, Switch} from "spaper"
   import {goto} from "$app/navigation"
   import {page, session} from "$app/stores"
   // import Datepicker from '$lib/Datepicker.svelte'
@@ -22,6 +23,7 @@
   // let dates
   let decision = social.decision || null
   let status = "Not started"
+  let loading
 
   $: invitees = social.invitees
   $: inviteesCount = Object.values(invitees).length
@@ -34,9 +36,11 @@
   // 	.reduce((allDates, inviteeDates) => allDates.concat(inviteeDates), [])
   // 	.map(date => new Date(date).getTime())
 
-  let pushEnabled
+  let pushBrowserSupport
   let pushPermission
   let pushSubscription
+  let pushSwitch = true
+  $: pushSwitch = pushBrowserSupport && pushPermission !== "denied"
 
   onMount(async () => {
     const q = faunadb.query
@@ -74,9 +78,13 @@
     startStream()
     status = "📡 Live-streaming updates"
 
-    pushEnabled = "serviceWorker" in navigator && "PushManager" in window
+    pushBrowserSupport =
+      "serviceWorker" in navigator && "PushManager" in window && "Notification" in window
+    if (!pushBrowserSupport) return
+
     pushPermission = Notification.permission
     pushSubscription = await push.getExistingSubscription()
+
     if (
       pushSubscription &&
       (!user.pushSubscriptions ||
@@ -100,76 +108,89 @@
 
 <StreamingStatus {status} />
 
-<h2>
+<h1>
   {inviteesCount > 1 ? "Here are the others!" : "You are the only one here..."}
-</h2>
+</h1>
 <Invitees {invitees} />
 <Inviter />
-<button
-  disabled={!pushEnabled || pushPermission === "denied"}
-  on:click={async () => {
-    if (pushSubscription) {
-      await push.unsubscribe()
-      await fetch("push.json", {
-        method: "DELETE",
-        body: JSON.stringify({
-          push: pushSubscription,
-        }),
-      })
-      pushSubscription = null
-      return
-    }
-
-    pushPermission = await push.askPermission()
-    const permissionGranted = pushPermission === "granted"
-    if (permissionGranted) {
-      pushSubscription = await push.subscribe()
-      await fetch("push.json", {
-        method: "POST",
-        body: JSON.stringify({
-          push: pushSubscription,
-        }),
-      })
-    }
-  }}
-  style="background-color: cornflowerblue;"
-  title={!pushEnabled
+<Form
+  style="margin: 1rem;"
+  title={!pushBrowserSupport
     ? "Your browser does not support push notifications"
     : pushPermission === "denied"
     ? "You've denied notification permissions. Update your browser settings for this website and click this button again if you'd like to enable them."
     : !pushSubscription
     ? "Push permissions are granted but you need to enable them."
     : "Push notifications are enabled 📡"}
-  >{pushPermission === "granted" && pushSubscription
-    ? "DISABLE PUSH NOTIFICATIONS"
-    : "ENABLE PUSH NOTIFICATIONS"}</button
 >
+  <Switch
+    inline
+    checked={pushSwitch}
+    on:change={async event => {
+      const switchOn = event.detail
+
+      if (!switchOn) {
+        await push.unsubscribe()
+        await fetch("push.json", {
+          method: "DELETE",
+          body: JSON.stringify({
+            push: pushSubscription,
+          }),
+        })
+        pushSubscription = null
+        return
+      }
+
+      pushPermission = await push.askPermission()
+      const permissionGranted = pushPermission === "granted"
+      if (permissionGranted) {
+        pushSubscription = await push.subscribe()
+        await fetch("push.json", {
+          method: "POST",
+          body: JSON.stringify({
+            push: pushSubscription,
+          }),
+        })
+      }
+    }}
+    style="background-color: cornflowerblue;"
+    >{pushPermission === "granted" && pushSubscription
+      ? "DISABLE PUSH NOTIFICATIONS"
+      : "ENABLE PUSH NOTIFICATIONS"}
+  </Switch>
+</Form>
 
 <!-- <h2>Here's everyone's availability</h2>
 <Datepicker disabledTo={10000} selected={dates}/> -->
 
 {#if inviteesWithDates.length > 1}
-  <h2>Choose a date</h2>
+  <h1>Choose a date</h1>
   <!-- svelte-ignore missing-declaration -->
-  <form
+  <Form
     id="everyone"
-    on:submit|preventDefault={async e => {
-      const formData = new FormData(e.target)
-      const decision = formData.get("best-dates")
+    on:submit={async e => {
+      loading = true
 
-      await fetch("everyone", {
-        method: "PATCH",
-        body: JSON.stringify({
-          decision,
-        }),
-      })
-      goto("decision")
+      try {
+        const formData = new FormData(e.target)
+        const decision = formData.get("best-dates")
+
+        await fetch("everyone", {
+          method: "PATCH",
+          body: JSON.stringify({
+            decision,
+          }),
+        })
+        goto("decision")
+      } finally {
+        loading = false
+      }
     }}
   >
     <BestDates {invitees} bind:selected={decision} />
-  </form>
+  </Form>
 {:else}
-  <h2>Next steps</h2>
+  <h1>Next steps</h1>
   <ol>
     <li>Wait for others to join 👆</li>
     <li>See which dates everyone is available 📅</li>
@@ -177,13 +198,16 @@
   </ol>
 {/if}
 
-<div>
+<div style="margin: 1rem;">
   <Retreat back="you" />
   <Next disabled={inviteesWithDates.length < 2 || !decision} form="everyone" />
+  <div style="margin: 1rem;">
+    <Progress style={`visibility: ${loading ? "visible" : "hidden"};`} infinite striped />
+  </div>
 </div>
 
 <style>
-  h2 {
+  h1 {
     align-self: center;
   }
 </style>
