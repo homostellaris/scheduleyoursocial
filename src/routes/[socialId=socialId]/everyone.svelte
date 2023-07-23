@@ -10,10 +10,12 @@
   import Retreat from "$lib/Back.svelte"
   import Invitees from "$lib/Invitees.svelte"
   import faunadb from "faunadb"
-  import {onMount} from "svelte"
+  import {getContext, onMount} from "svelte"
   import StreamingStatus from "$lib/StreamingStatus.svelte"
   import Inviter from "$lib/Inviter.svelte"
   import push from "$lib/push"
+
+  const {getAnalytics} = getContext("analytics")
 
   export let social
   export let user
@@ -130,6 +132,7 @@
       const switchOn = event.detail
 
       if (!switchOn) {
+        getAnalytics().trackEvent("Disable push notifications")
         await push.unsubscribe()
         await fetch("push.json", {
           method: "DELETE",
@@ -141,6 +144,7 @@
         return
       }
 
+      getAnalytics().trackEvent("Enable push notifications")
       pushPermission = await push.askPermission()
       const permissionGranted = pushPermission === "granted"
       if (permissionGranted) {
