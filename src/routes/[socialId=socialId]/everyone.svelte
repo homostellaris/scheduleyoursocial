@@ -22,7 +22,6 @@
 
   let invitees
   let inviteesCount
-  // let dates
   let decision = social.decision || null
   let status = "Not started"
   let loading
@@ -32,11 +31,6 @@
   $: inviteesWithDates = Object.values(invitees).filter(
     invitee => invitee.dates && invitee.dates.length
   )
-  // $: dates = Object.entries(invitees)
-  // 	.filter(([inviteeId, _]) => selected ? inviteeId === selected : true)
-  // 	.map(([_, invitee]) => invitee.dates)
-  // 	.reduce((allDates, inviteeDates) => allDates.concat(inviteeDates), [])
-  // 	.map(date => new Date(date).getTime())
 
   let pushBrowserSupport
   let pushPermission

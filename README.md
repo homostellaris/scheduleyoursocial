@@ -7,4 +7,4 @@
 4. `npm run dev`
 5. `npm run db:init`
 6. Copy the `secret` from stdout into the value for `FAUNADB_INVITEE_SECRET` in `.env`.
-7. `open http://localhost:3000/`
+7. `open http://localhost:6602/`

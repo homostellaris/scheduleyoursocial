@@ -10,7 +10,7 @@ const client = new faunadb.Client({
 	secret: process.env.FAUNADB_SERVER_SECRET,
 })
 
-function todayPlus (days) {
+function todayPlus(days) {
 	return q.TimeAdd(q.ToDate(q.Now()), days, "days")
 }
 
@@ -71,4 +71,4 @@ const response = await client.query(
 	)
 )
 const socialId = toSocialId(response.ref.id)
-console.info(`http://localhost:3000/${socialId}/everyone`)
+console.info(`http://localhost:6602/${socialId}/everyone`)
