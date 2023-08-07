@@ -24,7 +24,7 @@
 
 <style>
   :global(.calendar *) {
-    font-family: "Port Lligat Slab";
+    font-family: "Port Lligat Slab", serif;
     font-size: 21px;
   }
   :global(.calendar-date) {

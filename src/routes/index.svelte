@@ -1,7 +1,8 @@
 <script context="module">
-  import { Form, Input, Progress } from "spaper";
   import { goto } from "$app/navigation";
   import Next from "$lib/Next.svelte";
+  import { theme } from "$lib/theme.store";
+  import { Form, Input, Progress } from "spaper";
   import { onMount } from "svelte";
 
   export const prerender = true;
@@ -9,6 +10,8 @@
 
 <script>
   let loading;
+  // TODO: Find a better way to do this.
+  $theme.background = "beer";
 
   onMount(() => {
     document.getElementById("name").focus();
@@ -53,15 +56,3 @@
     />
   </div>
 </Form>
-
-<!-- TODO: Can I do a sweet transition from this page to the next? -->
-
-<style>
-  h1 {
-    font-size: 2.59em;
-  }
-
-  p {
-    font-size: 1.5rem;
-  }
-</style>
