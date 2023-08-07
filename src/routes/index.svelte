@@ -1,18 +1,18 @@
 <script context="module">
-  import {Form, Input, Progress} from "spaper"
-  import {goto} from "$app/navigation"
-  import Next from "$lib/Next.svelte"
-  import {onMount} from "svelte"
+  import { Form, Input, Progress } from "spaper";
+  import { goto } from "$app/navigation";
+  import Next from "$lib/Next.svelte";
+  import { onMount } from "svelte";
 
-  export const prerender = true
+  export const prerender = true;
 </script>
 
 <script>
-  let loading
+  let loading;
 
   onMount(() => {
-    document.getElementById("name").focus()
-  })
+    document.getElementById("name").focus();
+  });
 </script>
 
 <svelte:head>
@@ -24,29 +24,33 @@
 
 <!-- svelte-ignore missing-declaration -->
 <Form
-  on:submit={async e => {
-    loading = true
+  on:submit={async (e) => {
+    loading = true;
 
     try {
-      const formData = new FormData(e.target)
-      const name = formData.get("name")
+      const formData = new FormData(e.target);
+      const name = formData.get("name");
 
       const response = await fetch("/create.json", {
         method: "POST",
         body: formData,
-      })
+      });
 
-      const socialId = await response.text()
-      await goto(`/${socialId}/you?name=${name}`)
+      const socialId = await response.text();
+      await goto(`/${socialId}/you?name=${name}`);
     } finally {
-      loading = false
+      loading = false;
     }
   }}
 >
   <Input id="name" class="margin-bottom-small" name="name" />
   <Next disabled={loading} />
   <div>
-    <Progress style={`visibility: ${loading ? "visible" : "hidden"};`} infinite striped />
+    <Progress
+      style={`visibility: ${loading ? "visible" : "hidden"};`}
+      infinite
+      striped
+    />
   </div>
 </Form>
 
