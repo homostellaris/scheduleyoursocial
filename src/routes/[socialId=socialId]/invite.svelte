@@ -1,8 +1,14 @@
-<script>
+<script context="module">
   import {goto} from "$app/navigation"
   import Onward from "$lib/Next.svelte"
+  import {Input} from "spaper"
+  import {onMount} from "svelte"
+</script>
 
-  export let user
+<script>
+  onMount(() => {
+    document.getElementById("name").focus()
+  })
 </script>
 
 <svelte:head>
@@ -26,6 +32,6 @@
   }}
 >
   <!-- TODO: Hardcode a few different placeholder names to select at random. -->
-  <input autofocus id="name" name="name" />
+  <Input id="name" name="name" />
   <Onward />
 </form>

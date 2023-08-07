@@ -2,12 +2,17 @@
   import {Form, Input, Progress} from "spaper"
   import {goto} from "$app/navigation"
   import Next from "$lib/Next.svelte"
+  import {onMount} from "svelte"
 
   export const prerender = true
 </script>
 
 <script>
   let loading
+
+  onMount(() => {
+    document.getElementById("name").focus()
+  })
 </script>
 
 <svelte:head>
@@ -38,7 +43,7 @@
     }
   }}
 >
-  <Input class="margin-bottom-small" name="name" />
+  <Input id="name" class="margin-bottom-small" name="name" />
   <Next disabled={loading} />
   <div>
     <Progress style={`visibility: ${loading ? "visible" : "hidden"};`} infinite striped />
