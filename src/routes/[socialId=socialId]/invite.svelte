@@ -31,7 +31,6 @@
     await goto(`you?name=${name}`)
   }}
 >
-  <!-- TODO: Hardcode a few different placeholder names to select at random. -->
   <Input id="name" name="name" />
   <Onward />
 </form>

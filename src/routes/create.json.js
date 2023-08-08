@@ -1,5 +1,5 @@
 import faunadb from 'faunadb'
-import {toSocialId} from '$lib/id'
+import { toSocialId } from '$lib/id'
 
 const q = faunadb.query
 
@@ -10,7 +10,7 @@ const client = new faunadb.Client({
 	secret: process.env.FAUNADB_SERVER_SECRET,
 })
 
-export const post = async ({request, locals}) => {
+export const post = async ({ request, locals }) => {
 	const data = await request.formData()
 	const name = data.get('name')
 
@@ -24,6 +24,7 @@ export const post = async ({request, locals}) => {
 							name,
 						}
 					},
+					organizer: locals.userId
 				}
 			}
 		)

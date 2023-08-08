@@ -8,6 +8,9 @@
 
 <script>
   export let user
+  export let social
+
+  let organizer = social.invitees[social.organizer]
   let name = $page.url.searchParams.get("name") || user.name
   let loading
   let dates = user.dates.map(date => new Date(date).getTime()) || []
@@ -39,7 +42,8 @@
     }
   }}
 >
-  <Datepicker bind:selected={dates} />
+  <Datepicker bind:selected={dates} marked={organizer.dates} />
+  <p>👑 = days the organizer has chosen</p>
   <div style="text-align: center;">
     <Next />
   </div>

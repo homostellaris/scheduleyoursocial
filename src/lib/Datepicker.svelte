@@ -5,6 +5,7 @@
 <script>
   export let selected
   export let disabledTo = -1
+  export let marked
 
   const today = new Date()
   const yesterday = new Date(today)
@@ -15,6 +16,7 @@
   <Datepicker
     disabled={["1970-01-01", yesterday]}
     finishBtn={false}
+    {marked}
     pickerRule={"free"}
     bind:selected
   />
@@ -31,6 +33,17 @@
 
   :global(.calendar-dayOfWeek) {
     font-size: 16px;
+  }
+
+  :global(.is-focused::before) {
+    content: "👑" !important;
+    background-color: unset !important;
+    width: 2px !important;
+    height: 2px !important;
+    font-size: 15px;
+    line-height: calc(0.01 * var(--praecox-calendar-custom-height, var(--praecox-calendar-height)));
+    top: 0 !important;
+    left: 0 !important;
   }
 
   .datepicker {
