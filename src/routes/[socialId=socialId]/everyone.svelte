@@ -115,8 +115,11 @@
 </h1>
 <Invitees {invitees} />
 <Inviter />
+
+<p style="margin-top: 1rem;">
+  Enable push notifications and we'll update you when people join the social or a decision is made.
+</p>
 <Form
-  style="margin: 1rem;"
   title={!pushBrowserSupport
     ? "Your browser does not support push notifications"
     : pushPermission === "denied"
@@ -126,6 +129,7 @@
     : "Push notifications are enabled 📡"}
 >
   <Switch
+    name="push-notifications"
     inline
     checked={pushSwitch}
     on:change={async event => {
