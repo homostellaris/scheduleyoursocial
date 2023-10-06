@@ -10,8 +10,7 @@
     try {
       await navigator.share({
         title: "Board game night todo list",
-        text: "copyableItems",
-        url: "http://google.com",
+        text: copyableItems,
       });
       // trackShareInviteLink("native");
     } catch (error) {

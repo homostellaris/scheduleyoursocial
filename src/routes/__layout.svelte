@@ -40,7 +40,7 @@
   <Bubbles />
 {/if}
 
-<div class="container">
+<div class="main-container">
   <main>
     <slot />
   </main>
@@ -78,9 +78,9 @@
     font-family: monospace;
   }
 
-  :global(html) {
-    /* font-size: calc(1em + 0.5vw); */
-  }
+  /* :global(html) {
+    font-size: calc(1em + 0.5vw);
+  } */
 
   :global(h1, h2, h3, p, button, li) {
     color: white;
@@ -91,6 +91,13 @@
   :global(h1) {
     font-size: 4.17em;
     font-weight: 700;
+  }
+
+  @media (max-width: 500px) {
+    :global(h1) {
+      font-size: 3em;
+      font-weight: 700;
+    }
   }
 
   :global(h2) {
@@ -138,7 +145,7 @@
     position: relative;
   }
 
-  :global(.container) {
+  :global(.main-container) {
     display: flex;
     flex-direction: column;
     min-height: 100vh;

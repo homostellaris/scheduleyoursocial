@@ -50,4 +50,12 @@
     display: flex;
     align-items: center;
   }
+
+  @media (max-width: 500px) {
+    /* TODO: Fix this */
+    div[slot="title"] {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 </style>

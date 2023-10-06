@@ -18,6 +18,7 @@
 <style>
   .content {
     max-width: 900px;
+    /* font-size: 1rem; */
   }
 
   .content :global(*) {

@@ -1,91 +1,95 @@
 <script>
-  import {Form, Progress, Switch} from "spaper"
-  import {goto} from "$app/navigation"
-  import {page, session} from "$app/stores"
+  import { Form, Progress, Switch } from "spaper";
+  import { goto } from "$app/navigation";
+  import { page, session } from "$app/stores";
   // import Datepicker from '$lib/Datepicker.svelte'
-  import convertDatesToStrings from "$lib/convertDatesToStrings"
-  import BestDates from "$lib/BestDates.svelte"
-  import {toDatabaseId} from "$lib/id"
-  import Next from "$lib/Next.svelte"
-  import Retreat from "$lib/Back.svelte"
-  import Invitees from "$lib/Invitees.svelte"
-  import faunadb from "faunadb"
-  import {getContext, onMount} from "svelte"
-  import StreamingStatus from "$lib/StreamingStatus.svelte"
-  import Inviter from "$lib/Inviter.svelte"
-  import push from "$lib/push"
+  import convertDatesToStrings from "$lib/convertDatesToStrings";
+  import BestDates from "$lib/BestDates.svelte";
+  import { toDatabaseId } from "$lib/id";
+  import Next from "$lib/Next.svelte";
+  import Retreat from "$lib/Back.svelte";
+  import Invitees from "$lib/Invitees.svelte";
+  import faunadb from "faunadb";
+  import { getContext, onMount } from "svelte";
+  import StreamingStatus from "$lib/StreamingStatus.svelte";
+  import Inviter from "$lib/Inviter.svelte";
+  import push from "$lib/push";
 
-  const {getAnalytics} = getContext("analytics")
+  const { getAnalytics } = getContext("analytics");
 
-  export let social
-  export let user
+  export let social;
+  export let user;
 
-  let invitees
-  let inviteesCount
-  let decision = social.decision || null
-  let status = "Not started"
-  let loading
+  let invitees;
+  let inviteesCount;
+  let decision = social.decision || null;
+  let status = "Not started";
+  let loading;
 
-  $: invitees = social.invitees
-  $: inviteesCount = Object.values(invitees).length
+  $: invitees = social.invitees;
+  $: inviteesCount = Object.values(invitees).length;
   $: inviteesWithDates = Object.values(invitees).filter(
-    invitee => invitee.dates && invitee.dates.length
-  )
+    (invitee) => invitee.dates && invitee.dates.length
+  );
 
-  let pushBrowserSupport
-  let pushPermission
-  let pushSubscription
-  let pushSwitch = true
-  $: pushSwitch = pushBrowserSupport && pushPermission !== "denied"
+  let pushBrowserSupport;
+  let pushPermission;
+  let pushSubscription;
+  let pushSwitch = true;
+  $: pushSwitch = pushBrowserSupport && pushPermission !== "denied";
 
   onMount(async () => {
-    const q = faunadb.query
-    const client = new faunadb.Client({...$session.faunadb})
+    const q = faunadb.query;
+    const client = new faunadb.Client({ ...$session.faunadb });
 
-    const databaseId = toDatabaseId($page.params.socialId)
-    const docRef = q.Ref(q.Collection("social"), databaseId)
+    const databaseId = toDatabaseId($page.params.socialId);
+    const docRef = q.Ref(q.Collection("social"), databaseId);
 
-    let stream
+    let stream;
 
-    console.info("Streaming social", databaseId)
+    console.info("Streaming social", databaseId);
     const startStream = () => {
       stream = client.stream
         .document(docRef)
-        .on("snapshot", snapshot => {
-          social = convertDatesToStrings(snapshot.data)
+        .on("snapshot", (snapshot) => {
+          social = convertDatesToStrings(snapshot.data);
         })
-        .on("version", version => {
-          social = convertDatesToStrings(version.document.data)
+        .on("version", (version) => {
+          social = convertDatesToStrings(version.document.data);
 
           const newDecision =
-            social.decision && social.decision.value !== sessionStorage.getItem("decisionSeen")
-          if (newDecision) goto("decision")
+            social.decision &&
+            social.decision.value !== sessionStorage.getItem("decisionSeen");
+          if (newDecision) goto("decision");
 
-          status = "📡 Updated: someone joined the party!"
+          status = "📡 Updated: someone joined the party!";
         })
-        .on("error", error => {
-          console.error(error)
-          stream.close()
-          setTimeout(startStream, 1000)
+        .on("error", (error) => {
+          console.error(error);
+          stream.close();
+          setTimeout(startStream, 1000);
         })
-        .start()
-    }
+        .start();
+    };
 
-    startStream()
-    status = "📡 Live-streaming updates"
+    startStream();
+    status = "📡 Live-streaming updates";
 
     pushBrowserSupport =
-      "serviceWorker" in navigator && "PushManager" in window && "Notification" in window
-    if (!pushBrowserSupport) return
+      "serviceWorker" in navigator &&
+      "PushManager" in window &&
+      "Notification" in window;
+    if (!pushBrowserSupport) return;
 
-    pushPermission = Notification.permission
-    pushSubscription = await push.getExistingSubscription()
+    pushPermission = Notification.permission;
+    pushSubscription = await push.getExistingSubscription();
 
     if (
       pushSubscription &&
       (!user.pushSubscriptions ||
         !Object.values(user.pushSubscriptions).find(
-          savedPushSubscription => pushSubscription.endpoint === savedPushSubscription
+          (savedPushSubscription) =>
+            pushSubscription.endpoint === savedPushSubscription
         ))
     ) {
       await fetch("push.json", {
@@ -93,9 +97,9 @@
         body: JSON.stringify({
           push: pushSubscription,
         }),
-      })
+      });
     }
-  })
+  });
 </script>
 
 <svelte:head>
@@ -111,7 +115,8 @@
 <Inviter />
 
 <p style="margin-top: 1rem;">
-  Enable push notifications and we'll update you when people join the social or a decision is made.
+  Enable push notifications and we'll update you when people join the social or
+  a decision is made.
 </p>
 <Form
   title={!pushBrowserSupport
@@ -126,33 +131,33 @@
     name="push-notifications"
     inline
     checked={pushSwitch}
-    on:change={async event => {
-      const switchOn = event.detail
+    on:change={async (event) => {
+      const switchOn = event.detail;
 
       if (!switchOn) {
-        getAnalytics().trackEvent("Disable push notifications")
-        await push.unsubscribe()
+        getAnalytics().trackEvent("Disable push notifications");
+        await push.unsubscribe();
         await fetch("push.json", {
           method: "DELETE",
           body: JSON.stringify({
             push: pushSubscription,
           }),
-        })
-        pushSubscription = null
-        return
+        });
+        pushSubscription = null;
+        return;
       }
 
-      getAnalytics().trackEvent("Enable push notifications")
-      pushPermission = await push.askPermission()
-      const permissionGranted = pushPermission === "granted"
+      getAnalytics().trackEvent("Enable push notifications");
+      pushPermission = await push.askPermission();
+      const permissionGranted = pushPermission === "granted";
       if (permissionGranted) {
-        pushSubscription = await push.subscribe()
+        pushSubscription = await push.subscribe();
         await fetch("push.json", {
           method: "POST",
           body: JSON.stringify({
             push: pushSubscription,
           }),
-        })
+        });
       }
     }}
     style="background-color: cornflowerblue;"
@@ -170,22 +175,22 @@
   <!-- svelte-ignore missing-declaration -->
   <Form
     id="everyone"
-    on:submit={async e => {
-      loading = true
+    on:submit={async (e) => {
+      loading = true;
 
       try {
-        const formData = new FormData(e.target)
-        const decision = formData.get("best-dates")
+        const formData = new FormData(e.target);
+        const decision = formData.get("best-dates");
 
         await fetch("everyone", {
           method: "PATCH",
           body: JSON.stringify({
             decision,
           }),
-        })
-        goto("decision")
+        });
+        goto("decision");
       } finally {
-        loading = false
+        loading = false;
       }
     }}
   >
@@ -204,7 +209,11 @@
   <Retreat back="you" />
   <Next disabled={inviteesWithDates.length < 2 || !decision} form="everyone" />
   <div style="margin: 1rem;">
-    <Progress style={`visibility: ${loading ? "visible" : "hidden"};`} infinite striped />
+    <Progress
+      style={`visibility: ${loading ? "visible" : "hidden"};`}
+      infinite
+      striped
+    />
   </div>
 </div>
 

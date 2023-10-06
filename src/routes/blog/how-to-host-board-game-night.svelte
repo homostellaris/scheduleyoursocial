@@ -131,10 +131,6 @@
     discover a hidden gem that becomes a new favorite.
   </p>
 
-  <!-- TODO: Add some of our own recommendation or embed a list from another site -->
-
-  <!-- TODO: Link to other good articles -->
-
   <h2>Step 3: Set the Ambiance</h2>
 
   <p>
@@ -205,8 +201,8 @@
   </p>
   <div style="margin: 1rem auto; text-align: center;">
     <iframe
-      width="560"
-      height="315"
+      width="100%"
+      height="333"
       src="https://www.youtube.com/embed/zQVHkl8oQEU?si=rqgZbRAg3D772Gwa"
       title="YouTube video player"
       frameborder="0"
