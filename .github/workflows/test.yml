@@ -1,6 +1,12 @@
 name: Test
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -11,10 +17,20 @@ jobs:
         ports:
           - 8443:8443
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 'lts/gallium'
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run unit
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "lts/gallium"
+          cache: "npm"
+      - run: npm ci
+      - run: cp .env.template .env
+      - run: cat .env >> $GITHUB_ENV
+      - run: npm run --silent db:init | jq '.[-1].secret' | awk '{print "FAUNADB_INVITEE_SECRET="$1}' >> .env
+      - run: npx web-push generate-vapid-keys --json | jq '.publicKey' | awk '{print "VAPID_PUBLIC_KEY="$1}' >> .env
+      - run: npx web-push generate-vapid-keys --json | jq '.privateKey' | awk '{print "VAPID_PRIVATE_KEY="$1}' >> .env
+      - run: cat .env
+      - run: npm run unit
+      - uses: cypress-io/github-action@v5.8.4
+        with:
+          build: npm run build
+          start: npm run preview

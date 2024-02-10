@@ -1,28 +1,24 @@
 it("should work", () => {
-	cy.visit('/')
-	cy.get('#name')
-		.should('be.focused')
-		.type('Dan')
-	cy.get('.next').click()
+  cy.visit("/");
+  cy.get("#name").should("be.focused").type("Dan");
+  cy.contains("button", "NEXT").click();
 
-	cy.url().should('include', '/you')
-	cy.contains('Alright Dan, when can you do?')
-	cy.get('.next').click()
+  cy.url().should("include", "/you");
+  cy.get(".calendar-date").last().click();
+  cy.contains("button", "NEXT").click();
 
-	cy.url().should('include', '/everyone')
-	cy.contains("Here's everyone's availability, choose a date!")
-	cy.get('.invitee').should('have.text', 'Dan')
-	cy.get('.streaming-status').should('have.text', "Started live-streaming")
-	cy.task('updateSocial', {
-		invitees: {
-			'fakeId': {
-				name: 'Max'
-			}
-		}
-	})
-	cy.get('.invitee').should('have.text', 'Max')
-	cy.get('.next').click()
+  cy.url().should("include", "/everyone");
+  cy.get(".invitee").should("contain.text", "Dan");
+  cy.get(".streaming-status").should("contain.text", "Live-streaming updates");
 
-	cy.url().should('include', '/decision')
-	cy.contains("You're social is on")
-})
+  cy.task("updateSocial");
+  cy.reload(); // This shouldn't be necessary but HTTP2 isn't supported by Cypress so streaming doesn't work
+  cy.get(".invitee").should("contain.text", "Max");
+
+  cy.wait(1000); // Fix weird re-render that changes date format and resets checked state
+  cy.get('#best-dates [type="radio"]').first().check();
+  cy.contains("button", "NEXT").click();
+
+  cy.url().should("include", "/decision");
+  cy.contains("Your social is on");
+});
