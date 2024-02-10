@@ -3,22 +3,29 @@
 </script>
 
 <script>
+  import {toDateString} from './date'
+
+  export let marked
   export let selected
   export let disabledTo = -1
-  export let marked
+
+  const _marked = marked.map(date => new Date(date).getTime())
+  let _selected = selected.map(date => new Date(date).getTime())
 
   const today = new Date()
   const yesterday = new Date(today)
   yesterday.setDate(yesterday.getDate() + disabledTo)
+
+  $: selected = _selected.map(toDateString)
 </script>
 
 <div class="datepicker">
   <Datepicker
     disabled={['1970-01-01', yesterday]}
     finishBtn={false}
-    {marked}
+    marked={_marked}
     pickerRule={'free'}
-    bind:selected
+    bind:selected={_selected}
   />
 </div>
 

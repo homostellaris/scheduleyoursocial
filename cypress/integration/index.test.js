@@ -11,7 +11,7 @@ it('should work', () => {
   cy.get('.invitee').should('contain.text', 'Dan')
   cy.get('.streaming-status').should('contain.text', 'Live-streaming updates')
 
-  cy.task('updateSocial')
+  cy.task('updateSocial', '2025-01-01')
   cy.reload() // This shouldn't be necessary but HTTP2 isn't supported by Cypress so streaming doesn't work
   cy.get('.invitee').should('contain.text', 'Max')
 

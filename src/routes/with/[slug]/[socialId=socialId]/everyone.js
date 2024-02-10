@@ -39,7 +39,7 @@ export async function patch({params, request}) {
   await client.query(
     q.Update(q.Ref(q.Collection('social'), reference), {
       data: {
-        decision: q.Date(new Date(decision).toISOString().split('T')[0]),
+        decision: q.Date(decision),
       },
     }),
   )

@@ -41,7 +41,7 @@ export async function put({locals, params, request}) {
         invitees: {
           [locals.userId]: {
             dates: dates.map(date =>
-              q.Date(new Date(date).toISOString().split('T')[0]),
+              q.Date(date),
             ),
           },
         },

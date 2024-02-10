@@ -13,7 +13,7 @@
   let organizer = social.invitees[social.organizer]
   let name = $page.url.searchParams.get('name') || user.name
   let loading
-  let dates = user.dates.map(date => new Date(date).getTime()) || []
+  let dates = user.dates || []
 </script>
 
 <svelte:head>

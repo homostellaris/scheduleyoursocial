@@ -25,13 +25,6 @@ module.exports = (on, config) => {
   // `config` is the resolved Cypress config
   const faunadb = require('faunadb')
 
-  console.log({
-    domain: process.env.FAUNADB_DOMAIN,
-    port: process.env.FAUNADB_PORT,
-    scheme: process.env.FAUNADB_SCHEME,
-    secret: process.env.FAUNADB_SERVER_SECRET,
-  })
-
   const q = faunadb.query
   const client = new faunadb.Client({
     domain: process.env.FAUNADB_DOMAIN,
@@ -41,7 +34,7 @@ module.exports = (on, config) => {
   })
 
   on('task', {
-    async updateSocial(data) {
+    async updateSocial(date) {
       // Not figured out how to pass fauna expressions like q.Date to task yet so hard-coding an update for now.
       const allDocuments = await client.query(
         q.Max(q.Paginate(q.Documents(q.Collection('social')))),
@@ -54,7 +47,7 @@ module.exports = (on, config) => {
             invitees: {
               fakeId: {
                 name: 'Max',
-                dates: [q.Date(new Date().toISOString().split('T')[0])],
+                dates: [q.Date(date)],
               },
             },
           },
