@@ -10,9 +10,10 @@
     "getAllSocials": "./habitat.sh fauna eval --file db/get-all-socials.fql --secret $FAUNADB_SERVER_SECRET --port $FAUNADB_PORT --scheme $FAUNADB_SCHEME --domain $FAUNADB_DOMAIN | jq",
     "package": "svelte-kit package",
     "postinstall": "patch-package",
-    "preview": "svelte-kit preview",
+    "preview": "./habitat.sh svelte-kit preview -p 6602",
     "unit": "ava **/*.spec.js",
     "unit:dev": "npm run unit -- --watch",
+    "test": "cypress run",
     "test:dev": "cypress open"
   },
   "devDependencies": {
@@ -21,6 +22,7 @@
     "@sveltejs/kit": "^1.0.0-next.325",
     "ava": "^4.0.0",
     "cypress": "^9.3.1",
+    "dotenv": "^16.4.2",
     "fauna-shell": "^0.13.0",
     "netlify-cli": "^15.8.1",
     "patch-package": "^6.4.7",
