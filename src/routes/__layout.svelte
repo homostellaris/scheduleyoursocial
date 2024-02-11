@@ -5,7 +5,6 @@
   import Footer from '$lib/Footer.svelte'
   import {theme} from '$lib/theme.store'
   import * as Sentry from '@sentry/browser'
-  import {BrowserTracing} from '@sentry/tracing'
   import Plausible from 'plausible-tracker'
   import {onMount, setContext} from 'svelte'
 
@@ -24,7 +23,7 @@
   onMount(() => {
     Sentry.init({
       dsn: 'https://5b7a4ba6b3ff446ea520d3b5d7b854f2@o1232542.ingest.sentry.io/6380542',
-      integrations: [new BrowserTracing()],
+      integrations: [Sentry.browserTracingIntegration()],
       tracesSampleRate: 1.0,
       enabled: !dev,
     })
