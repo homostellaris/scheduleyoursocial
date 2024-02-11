@@ -14,7 +14,7 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-require("dotenv").config();
+require('dotenv').config()
 
 /**
  * @type {Cypress.PluginConfig}
@@ -23,44 +23,44 @@ require("dotenv").config();
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-  const faunadb = require("faunadb");
+  const faunadb = require('faunadb')
 
   console.log({
     domain: process.env.FAUNADB_DOMAIN,
     port: process.env.FAUNADB_PORT,
     scheme: process.env.FAUNADB_SCHEME,
     secret: process.env.FAUNADB_SERVER_SECRET,
-  });
+  })
 
-  const q = faunadb.query;
+  const q = faunadb.query
   const client = new faunadb.Client({
     domain: process.env.FAUNADB_DOMAIN,
     port: process.env.FAUNADB_PORT,
     scheme: process.env.FAUNADB_SCHEME,
     secret: process.env.FAUNADB_SERVER_SECRET,
-  });
+  })
 
-  on("task", {
+  on('task', {
     async updateSocial(data) {
       // Not figured out how to pass fauna expressions like q.Date to task yet so hard-coding an update for now.
       const allDocuments = await client.query(
-        q.Max(q.Paginate(q.Documents(q.Collection("social"))))
-      );
-      const socialUnderTestId = allDocuments.data[0].id;
+        q.Max(q.Paginate(q.Documents(q.Collection('social')))),
+      )
+      const socialUnderTestId = allDocuments.data[0].id
 
       const response = await client.query(
-        q.Update(q.Ref(q.Collection("social"), socialUnderTestId), {
+        q.Update(q.Ref(q.Collection('social'), socialUnderTestId), {
           data: {
             invitees: {
               fakeId: {
-                name: "Max",
-                dates: [q.Date(new Date().toISOString().split("T")[0])],
+                name: 'Max',
+                dates: [q.Date(new Date().toISOString().split('T')[0])],
               },
             },
           },
-        })
-      );
-      return response;
+        }),
+      )
+      return response
     },
-  });
-};
+  })
+}
