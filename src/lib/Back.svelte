@@ -1,5 +1,5 @@
 <script context="module">
-  import {Button} from "spaper"
+  import {Button} from 'spaper'
 </script>
 
 <script>

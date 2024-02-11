@@ -1,5 +1,5 @@
 <script context="module">
-  import Bubble from "./Bubble.svelte"
+  import Bubble from './Bubble.svelte'
 </script>
 
 <div class="bubbles">

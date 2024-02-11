@@ -1,42 +1,42 @@
 <script context="module">
-  import "papercss/dist/paper.min.css";
-  import { dev } from "$app/env";
-  import Bubbles from "$lib/Bubbles/index.svelte";
-  import Footer from "$lib/Footer.svelte";
-  import { theme } from "$lib/theme.store";
-  import * as Sentry from "@sentry/browser";
-  import { BrowserTracing } from "@sentry/tracing";
-  import Plausible from "plausible-tracker";
-  import { onMount, setContext } from "svelte";
+  import 'papercss/dist/paper.min.css'
+  import {dev} from '$app/env'
+  import Bubbles from '$lib/Bubbles/index.svelte'
+  import Footer from '$lib/Footer.svelte'
+  import {theme} from '$lib/theme.store'
+  import * as Sentry from '@sentry/browser'
+  import {BrowserTracing} from '@sentry/tracing'
+  import Plausible from 'plausible-tracker'
+  import {onMount, setContext} from 'svelte'
 
-  export const prerender = true;
+  export const prerender = true
 </script>
 
 <script>
-  let plausible;
-  setContext("analytics", {
+  let plausible
+  setContext('analytics', {
     getAnalytics: () => plausible,
-  });
+  })
 
-  let background;
-  $: background = $theme.background;
+  let background
+  $: background = $theme.background
 
   onMount(() => {
     Sentry.init({
-      dsn: "https://5b7a4ba6b3ff446ea520d3b5d7b854f2@o1232542.ingest.sentry.io/6380542",
+      dsn: 'https://5b7a4ba6b3ff446ea520d3b5d7b854f2@o1232542.ingest.sentry.io/6380542',
       integrations: [new BrowserTracing()],
       tracesSampleRate: 1.0,
       enabled: !dev,
-    });
+    })
 
     // TODO: Raise a PR to define exports properly so this works with Vite.
-    plausible = Plausible();
-    plausible.enableAutoPageviews();
-    plausible.enableAutoOutboundTracking();
-  });
+    plausible = Plausible()
+    plausible.enableAutoPageviews()
+    plausible.enableAutoOutboundTracking()
+  })
 </script>
 
-{#if background === "beer"}
+{#if background === 'beer'}
   <Bubbles />
 {/if}
 
@@ -67,11 +67,89 @@
   }
 
   :global(h1, h2, h3, h4, h5, h6) {
-    font-family: "Amatic SC", cursive;
+    font-family: 'Amatic SC', cursive;
   }
 
-  :global(html, body, button, input, div, span, applet, object, iframe, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video) {
-    font-family: "Amatic SC", cursive;
+  :global(
+      html,
+      body,
+      button,
+      input,
+      div,
+      span,
+      applet,
+      object,
+      iframe,
+      p,
+      blockquote,
+      pre,
+      a,
+      abbr,
+      acronym,
+      address,
+      big,
+      cite,
+      code,
+      del,
+      dfn,
+      em,
+      img,
+      ins,
+      kbd,
+      q,
+      s,
+      samp,
+      small,
+      strike,
+      strong,
+      sub,
+      sup,
+      tt,
+      var,
+      b,
+      u,
+      i,
+      center,
+      dl,
+      dt,
+      dd,
+      ol,
+      ul,
+      li,
+      fieldset,
+      form,
+      label,
+      legend,
+      table,
+      caption,
+      tbody,
+      tfoot,
+      thead,
+      tr,
+      th,
+      td,
+      article,
+      aside,
+      canvas,
+      details,
+      embed,
+      figure,
+      figcaption,
+      footer,
+      header,
+      hgroup,
+      menu,
+      nav,
+      output,
+      ruby,
+      section,
+      summary,
+      time,
+      mark,
+      audio,
+      video
+    ) {
+    font-family: 'Amatic SC', cursive;
   }
 
   :global(code) {
@@ -173,7 +251,7 @@
     text-decoration-thickness: auto;
   }
 
-  :global(.paper-btn, [type="button"], button) {
+  :global(.paper-btn, [type='button'], button) {
     padding: 0.5rem;
   }
 

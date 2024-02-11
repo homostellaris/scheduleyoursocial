@@ -1,6 +1,6 @@
 <script context="module">
-  import { Hero } from "spaper";
-  import Logo from "./Logo.svelte";
+  import {Hero} from 'spaper'
+  import Logo from './Logo.svelte'
 </script>
 
 <Hero type="primary">
@@ -36,7 +36,7 @@
 
   :global(p),
   li {
-    font-family: "Port Lligat Slab", serif;
+    font-family: 'Port Lligat Slab', serif;
   }
 
   div {
@@ -46,14 +46,14 @@
     font-size: xx-large;
   }
 
-  div[slot="title"] {
+  div[slot='title'] {
     display: flex;
     align-items: center;
   }
 
   @media (max-width: 500px) {
     /* TODO: Fix this */
-    div[slot="title"] {
+    div[slot='title'] {
       display: flex;
       flex-direction: column;
     }

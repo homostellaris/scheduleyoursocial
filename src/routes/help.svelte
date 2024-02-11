@@ -1,11 +1,11 @@
 <script context="module">
-  import { theme } from "$lib/theme.store";
+  import {theme} from '$lib/theme.store'
 
-  export const prerender = true;
+  export const prerender = true
 </script>
 
 <script>
-  $theme.background = "beer";
+  $theme.background = 'beer'
 </script>
 
 <svelte:head>

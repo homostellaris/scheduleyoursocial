@@ -1,17 +1,17 @@
 <script>
-  import {goto} from "$app/navigation"
-  import {page, session} from "$app/stores"
+  import {goto} from '$app/navigation'
+  import {page, session} from '$app/stores'
   // import Datepicker from '$lib/Datepicker.svelte'
-  import convertDatesToStrings from "$lib/convertDatesToStrings"
-  import BestDates from "$lib/BestDates.svelte"
-  import {toDatabaseId} from "$lib/id"
-  import Next from "$lib/Next.svelte"
-  import Retreat from "$lib/Back.svelte"
-  import Invitees from "$lib/Invitees.svelte"
-  import faunadb from "faunadb"
-  import {onMount} from "svelte"
-  import StreamingStatus from "$lib/StreamingStatus.svelte"
-  import Inviter from "$lib/Inviter.svelte"
+  import convertDatesToStrings from '$lib/convertDatesToStrings'
+  import BestDates from '$lib/BestDates.svelte'
+  import {toDatabaseId} from '$lib/id'
+  import Next from '$lib/Next.svelte'
+  import Retreat from '$lib/Back.svelte'
+  import Invitees from '$lib/Invitees.svelte'
+  import faunadb from 'faunadb'
+  import {onMount} from 'svelte'
+  import StreamingStatus from '$lib/StreamingStatus.svelte'
+  import Inviter from '$lib/Inviter.svelte'
 
   export let social
 
@@ -19,12 +19,12 @@
   let inviteesCount
   // let dates
   let decision = social.decision ? social.decision : null
-  let status = "Not started"
+  let status = 'Not started'
 
   $: invitees = social.invitees
   $: inviteesCount = Object.values(invitees).length
   $: inviteesWithDates = Object.values(invitees).filter(
-    invitee => invitee.dates && invitee.dates.length
+    invitee => invitee.dates && invitee.dates.length,
   )
   // $: dates = Object.entries(invitees)
   // 	.filter(([inviteeId, _]) => selected ? inviteeId === selected : true)
@@ -37,29 +37,30 @@
     const client = new faunadb.Client({...$session.faunadb})
 
     const databaseId = toDatabaseId($page.params.socialId)
-    const docRef = q.Ref(q.Collection("social"), databaseId)
+    const docRef = q.Ref(q.Collection('social'), databaseId)
 
     let stream
 
-    console.info("Streaming social", databaseId)
+    console.info('Streaming social', databaseId)
     const startStream = () => {
       stream = client.stream
         .document(docRef)
-        .on("snapshot", snapshot => {
-          console.debug("snapshot")
+        .on('snapshot', snapshot => {
+          console.debug('snapshot')
           social = convertDatesToStrings(snapshot.data)
         })
-        .on("version", version => {
-          console.debug("version")
+        .on('version', version => {
+          console.debug('version')
           social = convertDatesToStrings(version.document.data)
 
-          const decisionUpdated = social.decision && social.decision !== decision
-          if (decisionUpdated) goto("decision")
+          const decisionUpdated =
+            social.decision && social.decision !== decision
+          if (decisionUpdated) goto('decision')
 
-          status = "Updated: someone joined the party!"
+          status = 'Updated: someone joined the party!'
         })
-        .on("error", error => {
-          console.debug("Error:", error)
+        .on('error', error => {
+          console.debug('Error:', error)
           stream.close()
           setTimeout(startStream, 1000)
         })
@@ -67,7 +68,7 @@
     }
 
     startStream()
-    status = "Live-streaming updates 📡"
+    status = 'Live-streaming updates 📡'
   })
 </script>
 
@@ -78,7 +79,9 @@
 <StreamingStatus {status} />
 
 <h2>
-  {inviteesCount > 1 ? "Here are the other invitees!" : "You are the only invitee here..."}
+  {inviteesCount > 1
+    ? 'Here are the other invitees!'
+    : 'You are the only invitee here...'}
 </h2>
 <Invitees {invitees} />
 <Inviter />
@@ -93,15 +96,15 @@
     id="everyone"
     on:submit|preventDefault={async e => {
       const formData = new FormData(e.target)
-      const decision = formData.get("best-dates")
+      const decision = formData.get('best-dates')
 
-      await fetch("everyone", {
-        method: "PATCH",
+      await fetch('everyone', {
+        method: 'PATCH',
         body: JSON.stringify({
           decision,
         }),
       })
-      goto("decision")
+      goto('decision')
     }}
   >
     <BestDates {invitees} bind:selected={decision} />
