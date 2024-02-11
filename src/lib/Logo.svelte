@@ -1,9 +1,9 @@
 <script context="module">
-  import logo from "$lib/logo - 240.png";
+  import logo from '$lib/logo - 240.png'
 </script>
 
 <script>
-  export let width;
+  export let width
 </script>
 
 <img

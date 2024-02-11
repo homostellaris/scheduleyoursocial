@@ -1,5 +1,5 @@
 <script context="module">
-  import Datepicker from "praecox-datepicker"
+  import Datepicker from 'praecox-datepicker'
 </script>
 
 <script>
@@ -14,17 +14,17 @@
 
 <div class="datepicker">
   <Datepicker
-    disabled={["1970-01-01", yesterday]}
+    disabled={['1970-01-01', yesterday]}
     finishBtn={false}
     {marked}
-    pickerRule={"free"}
+    pickerRule={'free'}
     bind:selected
   />
 </div>
 
 <style>
   :global(.calendar *) {
-    font-family: "Port Lligat Slab", serif;
+    font-family: 'Port Lligat Slab', serif;
     font-size: 21px;
   }
   :global(.calendar-date) {
@@ -36,19 +36,22 @@
   }
 
   :global(.is-focused::before) {
-    content: "👑" !important;
+    content: '👑' !important;
     background-color: unset !important;
     width: 2px !important;
     height: 2px !important;
     font-size: 15px;
-    line-height: calc(0.01 * var(--praecox-calendar-custom-height, var(--praecox-calendar-height)));
+    line-height: calc(
+      0.01 *
+        var(--praecox-calendar-custom-height, var(--praecox-calendar-height))
+    );
     top: 0 !important;
     left: 0 !important;
   }
 
   .datepicker {
-    --praecox-calendar-custom-font-family: "Port Lligat Slab", serif;
-    --praecox-calendar-custom-number-font-family: "Port Lligat Slab", cursive;
+    --praecox-calendar-custom-font-family: 'Port Lligat Slab', serif;
+    --praecox-calendar-custom-number-font-family: 'Port Lligat Slab', cursive;
     --praecox-calendar-custom-font-main-color: #181818;
     --praecox-calendar-custom-border-radius: 25px;
     --praecox-calendar-custom-width: 320px;

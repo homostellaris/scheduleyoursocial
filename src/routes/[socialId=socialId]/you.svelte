@@ -1,9 +1,9 @@
 <script context="module">
-  import {Form, Input, Progress} from "spaper"
-  import Datepicker from "$lib/Datepicker.svelte"
-  import {goto} from "$app/navigation"
-  import Next from "$lib/Next.svelte"
-  import {page} from "$app/stores"
+  import {Form, Input, Progress} from 'spaper'
+  import Datepicker from '$lib/Datepicker.svelte'
+  import {goto} from '$app/navigation'
+  import Next from '$lib/Next.svelte'
+  import {page} from '$app/stores'
 </script>
 
 <script>
@@ -11,7 +11,7 @@
   export let social
 
   let organizer = social.invitees[social.organizer]
-  let name = $page.url.searchParams.get("name") || user.name
+  let name = $page.url.searchParams.get('name') || user.name
   let loading
   let dates = user.dates.map(date => new Date(date).getTime()) || []
 </script>
@@ -30,13 +30,13 @@
   on:submit={async _ => {
     loading = true
     try {
-      await fetch("you", {
-        method: "PUT",
+      await fetch('you', {
+        method: 'PUT',
         body: JSON.stringify({
           dates,
         }),
       })
-      goto("everyone")
+      goto('everyone')
     } finally {
       loading = false
     }
@@ -48,6 +48,10 @@
     <Next />
   </div>
   <div style="margin: 1rem;">
-    <Progress style={`visibility: ${loading ? "visible" : "hidden"};`} infinite striped />
+    <Progress
+      style={`visibility: ${loading ? 'visible' : 'hidden'};`}
+      infinite
+      striped
+    />
   </div>
 </Form>

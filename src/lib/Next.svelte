@@ -1,5 +1,5 @@
 <script context="module">
-  import {Button} from "spaper"
+  import {Button} from 'spaper'
 </script>
 
 <script>
@@ -7,7 +7,10 @@
   export let form
 </script>
 
-<span><Button {disabled} {form} type="success" nativeType="submit">NEXT</Button></span>
+<span
+  ><Button {disabled} {form} type="success" nativeType="submit">NEXT</Button
+  ></span
+>
 
 <style>
   span {

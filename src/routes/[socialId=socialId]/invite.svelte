@@ -1,13 +1,13 @@
 <script context="module">
-  import {goto} from "$app/navigation"
-  import Onward from "$lib/Next.svelte"
-  import {Input} from "spaper"
-  import {onMount} from "svelte"
+  import {goto} from '$app/navigation'
+  import Onward from '$lib/Next.svelte'
+  import {Input} from 'spaper'
+  import {onMount} from 'svelte'
 </script>
 
 <script>
   onMount(() => {
-    document.getElementById("name").focus()
+    document.getElementById('name').focus()
   })
 </script>
 
@@ -21,10 +21,10 @@
 <form
   on:submit|preventDefault={async e => {
     const formData = new FormData(e.target)
-    const name = formData.get("name")
+    const name = formData.get('name')
 
-    await fetch("./invite", {
-      method: "POST",
+    await fetch('./invite', {
+      method: 'POST',
       body: formData,
     })
 

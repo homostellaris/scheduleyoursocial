@@ -1,11 +1,11 @@
 <script context="module">
-  import { Hero, Article } from "spaper";
-  import Todo from "$lib/Todo.svelte";
-  import fantasyBoardGameNight from "./fantasy-board-games-night.jpeg";
-  import competitiveGimli from "./competitive-gimli.gif";
-  import Logo from "$lib/Logo.svelte";
+  import {Hero, Article} from 'spaper'
+  import Todo from '$lib/Todo.svelte'
+  import fantasyBoardGameNight from './fantasy-board-games-night.jpeg'
+  import competitiveGimli from './competitive-gimli.gif'
+  import Logo from '$lib/Logo.svelte'
 
-  export const prerender = true;
+  export const prerender = true
 </script>
 
 <svelte:head>
@@ -43,16 +43,16 @@
 
   <Todo
     items={[
-      "Plan Ahead",
-      "Choose the Right Games",
-      "Set the Ambiance",
-      "Food Ideas",
-      "Learn by Playing",
-      "The Role of the Host",
-      "Encourage Friendly Competition",
-      "Embrace the Social Aspect",
-      "Time Management",
-      "Capture the Moments",
+      'Plan Ahead',
+      'Choose the Right Games',
+      'Set the Ambiance',
+      'Food Ideas',
+      'Learn by Playing',
+      'The Role of the Host',
+      'Encourage Friendly Competition',
+      'Embrace the Social Aspect',
+      'Time Management',
+      'Capture the Moments',
     ]}
   />
 
