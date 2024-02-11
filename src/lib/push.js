@@ -17,50 +17,47 @@
 // 	});
 // }
 
-function askPermission () {
-	return Notification.requestPermission()
+function askPermission() {
+  return Notification.requestPermission()
 }
 
-function getExistingSubscription () {
-	return navigator.serviceWorker.ready.then((registration) => {
-		return registration.pushManager.getSubscription()
-	});
+function getExistingSubscription() {
+  return navigator.serviceWorker.ready.then(registration => {
+    return registration.pushManager.getSubscription()
+  })
 }
 
-function subscribe () {
-	return navigator.serviceWorker
-		.register('/push-notification-service-worker.js')
-		.then((registration) => {
-			const subscribeOptions = {
-				userVisibleOnly: true,
-				applicationServerKey: 'BIJTw4YGppJBHll2m7OTLZ1Sj44nlAmwgZt-nr3qbciS_QsbSNlGRh1fjpMjmWyZ8hpeBa0w2wUIJMb3LNBP0K4',
-			};
+function subscribe() {
+  return navigator.serviceWorker
+    .register('/push-notification-service-worker.js')
+    .then(registration => {
+      const subscribeOptions = {
+        userVisibleOnly: true,
+        applicationServerKey:
+          'BIJTw4YGppJBHll2m7OTLZ1Sj44nlAmwgZt-nr3qbciS_QsbSNlGRh1fjpMjmWyZ8hpeBa0w2wUIJMb3LNBP0K4',
+      }
 
-			return registration.pushManager.subscribe(subscribeOptions);
-		})
-		.then((pushSubscription) => {
-			console.info(
-				'Subscribed to push notifications.'
-			);
-			return pushSubscription;
-		});
+      return registration.pushManager.subscribe(subscribeOptions)
+    })
+    .then(pushSubscription => {
+      console.info('Subscribed to push notifications.')
+      return pushSubscription
+    })
 }
 
-function unsubscribe () {
-	return navigator.serviceWorker.ready.then((registration) => {
-		registration.pushManager.getSubscription().then((subscription) => {
-			subscription
-				.unsubscribe()
-				.then((successful) => {
-					console.info('Unsubscribed from push notifications.')
-				})
-		});
-	});
+function unsubscribe() {
+  return navigator.serviceWorker.ready.then(registration => {
+    registration.pushManager.getSubscription().then(subscription => {
+      subscription.unsubscribe().then(successful => {
+        console.info('Unsubscribed from push notifications.')
+      })
+    })
+  })
 }
 
 export default {
-	askPermission,
-	getExistingSubscription,
-	subscribe,
-	unsubscribe,
+  askPermission,
+  getExistingSubscription,
+  subscribe,
+  unsubscribe,
 }

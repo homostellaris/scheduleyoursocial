@@ -7,7 +7,7 @@ a {
 }
 
 .paper-btn,
-[type="button"],
+[type='button'],
 button {
   padding: 0.5rem;
 }
