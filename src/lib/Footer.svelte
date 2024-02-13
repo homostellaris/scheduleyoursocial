@@ -24,16 +24,20 @@
     font-weight: bold;
   }
 
-  /* Why dis? */
-  @media (min-width: 480px) {
-    footer {
-      padding: 40px 0;
-    }
-  }
-
   div,
   span {
     margin: 0.5rem;
     width: min-content;
+  }
+
+  @media (min-width: 480px) {
+    /* Why dis? */
+    footer {
+      padding: 40px 0;
+    }
+    div,
+    span {
+      width: max-content;
+    }
   }
 </style>
