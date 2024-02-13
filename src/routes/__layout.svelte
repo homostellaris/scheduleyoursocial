@@ -13,20 +13,37 @@
 
 <script>
   let plausible
+
   setContext('analytics', {
     getAnalytics: () => plausible,
+    getFeedback: () => feedback,
   })
 
   let background
   $: background = $theme.background
 
   onMount(() => {
+    const feedback = Sentry.feedbackIntegration({
+      autoInject: false,
+      colorScheme: 'dark',
+      buttonLabel: 'Leave feedback',
+      showName: false,
+      emailPlaceholder: 'May be used to follow up on your feedback',
+      submitButtonLabel: 'Submit feedback',
+      formTitle: 'Leave feedback',
+      messageLabel: 'Feedback',
+      messagePlaceholder:
+        "Bug reports, feature requests, or anything else you want to tell us; don't hold back.",
+      showBranding: false,
+      successMessageText: 'We appreciate it you taking the time to do that 🙏',
+    })
     Sentry.init({
       dsn: 'https://5b7a4ba6b3ff446ea520d3b5d7b854f2@o1232542.ingest.sentry.io/6380542',
-      integrations: [Sentry.browserTracingIntegration()],
+      integrations: [Sentry.browserTracingIntegration(), feedback],
       tracesSampleRate: 1.0,
       enabled: !dev,
     })
+    feedback.attachTo(document.getElementById('feedback')) // This is in Footer
 
     // TODO: Raise a PR to define exports properly so this works with Vite.
     plausible = Plausible()
@@ -65,6 +82,14 @@
     /* --main-background: var(--beer); */
   }
 
+  :global(#sentry-feedback) {
+    --font-family: 'Port Lligat Slab', serif;
+    --top: auto;
+    --right: calc(50% - 160px);
+    --bottom: auto;
+    --left: calc(50% - 160px);
+  }
+
   :global(h1, h2, h3, h4, h5, h6) {
     font-family: 'Amatic SC', cursive;
   }
@@ -73,8 +98,6 @@
       html,
       body,
       button,
-      input,
-      div,
       span,
       applet,
       object,
@@ -117,7 +140,6 @@
       li,
       fieldset,
       form,
-      label,
       legend,
       table,
       caption,
@@ -149,6 +171,10 @@
       video
     ) {
     font-family: 'Amatic SC', cursive;
+  }
+
+  :global(label, input) {
+    font-family: 'Port Lligat Slab', serif;
   }
 
   :global(code) {
