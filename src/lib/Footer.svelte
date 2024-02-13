@@ -1,4 +1,11 @@
+<script>
+  import {Button} from 'spaper'
+</script>
+
 <footer>
+  <div>
+    <Button id="feedback" type="primary">Leave feedback</Button>
+  </div>
   <!-- TODO: Use something like `class:active={$page.path === '/about'}` to indicate which page we're currently on. -->
   <span><a sveltekit:prefetch href="/">Schedule another social</a></span>
   <span><a sveltekit:prefetch href="/help">Help</a></span>
@@ -10,6 +17,7 @@
   footer {
     display: flex;
     justify-content: center;
+    align-items: center;
   }
 
   footer a {
@@ -23,7 +31,9 @@
     }
   }
 
+  div,
   span {
     margin: 0.5rem;
+    width: min-content;
   }
 </style>
