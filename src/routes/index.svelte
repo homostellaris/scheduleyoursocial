@@ -46,7 +46,12 @@
     }
   }}
 >
-  <Input id="name" class="margin-bottom-small" name="name" />
+  <Input
+    id="name"
+    class="margin-bottom-small"
+    name="name"
+    style="text-transform: uppercase;"
+  />
   <Next disabled={loading} />
   <div>
     <Progress
