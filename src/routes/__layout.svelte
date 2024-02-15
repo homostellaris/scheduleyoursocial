@@ -229,6 +229,7 @@
   :global(button) {
     color: black;
     cursor: pointer;
+    font-weight: bold;
   }
 
   :global(button:disabled) {
