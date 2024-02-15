@@ -131,6 +131,7 @@
     name="push-notifications"
     inline
     checked={pushSwitch}
+    disabled={!pushBrowserSupport}
     on:change={async event => {
       const switchOn = event.detail
 
@@ -160,10 +161,14 @@
         })
       }
     }}
-    style="background-color: cornflowerblue;"
-    >{pushPermission === 'granted' && pushSubscription
-      ? 'DISABLE PUSH NOTIFICATIONS'
-      : 'ENABLE PUSH NOTIFICATIONS'}
+    ><span
+      class:disabled={!pushBrowserSupport}
+      style:font-family="'Port Lligat Slab', serif"
+    >
+      {pushPermission === 'granted' && pushSubscription
+        ? 'DISABLE PUSH NOTIFICATIONS'
+        : 'ENABLE PUSH NOTIFICATIONS'}
+    </span>
   </Switch>
 </Form>
 
