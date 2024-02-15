@@ -165,9 +165,7 @@
       class:disabled={!pushBrowserSupport}
       style:font-family="'Port Lligat Slab', serif"
     >
-      {pushPermission === 'granted' && pushSubscription
-        ? 'DISABLE PUSH NOTIFICATIONS'
-        : 'ENABLE PUSH NOTIFICATIONS'}
+      PUSH NOTIFICATIONS
     </span>
   </Switch>
 </Form>
