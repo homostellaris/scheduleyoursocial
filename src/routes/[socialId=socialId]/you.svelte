@@ -13,7 +13,10 @@
   let organizer = social.invitees[social.organizer]
   let name = $page.url.searchParams.get('name') || user.name
   let loading
-  let dates = user.dates || []
+
+  // Datepicker doesn't update bound array properly so unfortunately need to start with a fresh array everytime they return here.
+  // let dates = user.dates || []
+  let dates = []
 </script>
 
 <svelte:head>

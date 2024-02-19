@@ -1,5 +1,5 @@
-import { defineConfig } from 'cypress'
-import plugins from './cypress/plugins/index.cjs'
+import {defineConfig} from 'cypress'
+import plugins from './cypress/plugins/index.js'
 
 export default defineConfig({
   e2e: {

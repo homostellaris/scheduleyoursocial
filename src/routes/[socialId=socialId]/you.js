@@ -40,9 +40,7 @@ export async function put({locals, params, request}) {
       data: {
         invitees: {
           [locals.userId]: {
-            dates: dates.map(date =>
-              q.Date(date),
-            ),
+            dates: dates.map(date => q.Date(date)),
           },
         },
       },
