@@ -91,7 +91,13 @@ describe('when a decision has been made', () => {
     cy.setCookie('userId', 'inviteeID')
   })
 
-  it.skip('anyone can go back and amend it', () => {})
+  it.only('anyone can go back and amend it', function () {
+    cy.visit(`/${this.social.id}/decision`)
+    cy.contains('Your social is on January 3, 1970')
+    cy.contains('BACK').click()
+    cy.get('#best-dates [type="radio"]').first().check()
+    cy.contains('button', 'NEXT').click()
+  })
 
   it.skip("redirects invitees who haven't seen it yet", () => {})
 })

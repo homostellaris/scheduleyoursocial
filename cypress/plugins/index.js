@@ -94,5 +94,6 @@ function faunaify(data) {
       ]),
     ),
     organizer: data.organizer,
+    decision: data.decision ? q.Date(data.decision) : undefined,
   }
 }
