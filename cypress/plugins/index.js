@@ -32,10 +32,7 @@ import {toSocialId, toDatabaseId} from '../../src/lib/id.js'
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
-export default (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-
+export default (on, _config) => {
   on('task', {
     async createSocial(data) {
       const faunaData = {
@@ -51,17 +48,14 @@ export default (on, config) => {
     },
     async updateSocial({id, data}) {
       const reference = toDatabaseId(id)
+      const faunaData = {
+        data: {
+          ...faunaify(data),
+        },
+      }
+
       const response = await client.query(
-        q.Update(q.Ref(q.Collection('social'), reference), {
-          data: {
-            invitees: {
-              fakeId: {
-                name: 'Max',
-                dates: [q.Date(data)],
-              },
-            },
-          },
-        }),
+        q.Update(q.Ref(q.Collection('social'), reference), faunaData),
       )
       return response
     },

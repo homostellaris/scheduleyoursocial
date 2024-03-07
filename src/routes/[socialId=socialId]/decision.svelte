@@ -1,5 +1,6 @@
 <script context="module">
   import Retreat from '$lib/Back.svelte'
+  import cookie from 'cookie'
 </script>
 
 <script>
@@ -17,7 +18,7 @@
   )
 
   onMount(() => {
-    sessionStorage.setItem('decisionSeen', social.decision)
+    document.cookie = cookie.serialize('decision', social.decision)
   })
 </script>
 

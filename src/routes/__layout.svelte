@@ -41,7 +41,7 @@
       dsn: 'https://5b7a4ba6b3ff446ea520d3b5d7b854f2@o1232542.ingest.sentry.io/6380542',
       integrations: [Sentry.browserTracingIntegration(), feedback],
       tracesSampleRate: 1.0,
-      enabled: !dev,
+      enabled: !dev && document.location.hostname === 'scheduleyour.social', // TODO: Expose CI env var here instead of checking hostname
     })
     feedback.attachTo(document.getElementById('feedback')) // This is in Footer
 

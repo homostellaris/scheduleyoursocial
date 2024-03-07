@@ -9,5 +9,7 @@ export default defineConfig({
       return plugins(on, config)
     },
     baseUrl: 'http://localhost:6602',
+    video: true,
+    screenshotOnRunFailure: true,
   },
 })

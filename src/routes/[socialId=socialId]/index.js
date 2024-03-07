@@ -32,26 +32,3 @@ export async function get({params, locals, request}) {
     },
   }
 }
-
-export async function put({locals, params, request}) {
-  const socialId = params.socialId
-  const reference = toDatabaseId(socialId)
-
-  const {dates} = await request.json()
-
-  await client.query(
-    q.Update(q.Ref(q.Collection('social'), reference), {
-      data: {
-        invitees: {
-          [locals.userId]: {
-            dates: dates.map(date => q.Date(date)),
-          },
-        },
-      },
-    }),
-  )
-
-  return {
-    status: 200,
-  }
-}

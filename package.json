@@ -23,6 +23,7 @@
     "ava": "^4.0.0",
     "cypress": "^13.6.4",
     "cypress-map": "^1.30.0",
+    "cypress-wait-until": "^3.0.1",
     "dotenv": "^16.4.2",
     "fauna-shell": "^0.13.0",
     "gitmoji-cli": "^9.1.0",

@@ -2,6 +2,7 @@ import faunadb from 'faunadb'
 import {toDatabaseId} from '$lib/id'
 import notification from '$lib/server/notification'
 import convertDatesToStrings from '$lib/convertDatesToStrings'
+import {decisionRedirect, hasDecisionBeenSeen} from '$lib/redirectToDecision'
 
 const q = faunadb.query
 
@@ -12,7 +13,7 @@ const client = new faunadb.Client({
   secret: process.env.FAUNADB_SERVER_SECRET,
 })
 
-export async function get({params, locals}) {
+export async function get({params, locals, request}) {
   const socialId = params.socialId
   const reference = toDatabaseId(socialId)
   const response = await client.query(
@@ -21,6 +22,8 @@ export async function get({params, locals}) {
   const social = convertDatesToStrings(response.data)
   if (social.decision) social.decision = social.decision.value
   const user = social.invitees[locals.userId]
+
+  if (hasDecisionBeenSeen(request, social)) return decisionRedirect(socialId)
 
   return {
     status: 200,
