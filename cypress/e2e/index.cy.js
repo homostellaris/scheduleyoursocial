@@ -19,7 +19,17 @@ describe('when an organiser wants to schedule a social', () => {
 
     cy.location('pathname').then(pathname => {
       const socialId = pathname.split('/')[1]
-      cy.task('updateSocial', {id: socialId, data: '2024-01-02'})
+      cy.task('updateSocial', {
+        id: socialId,
+        data: {
+          invitees: {
+            fakeId: {
+              name: 'Max',
+              dates: ['2024-01-02'],
+            },
+          },
+        },
+      })
     })
     cy.reload() // This shouldn't be necessary but HTTP2 isn't supported by Cypress so streaming doesn't work
     cy.get('.invitee').should('contain.text', 'Max')
@@ -55,7 +65,7 @@ describe('when an invitee has chosen their availability', () => {
     cy.visit(`/${this.social.id}/everyone`)
     cy.contains('BACK').click()
 
-    // Force a wait for the page to re-render, think this may be caused by the SvelteKit server does intiial render in current time.
+    // Force a wait for the page to re-render and display date properly, not sure why this re-render happens.
     cy.contains('January 1970').should('exist')
     cy.contains('.calendar-date', /^3$/).click()
     cy.contains('.calendar-date', /^4$/).click()
@@ -65,9 +75,9 @@ describe('when an invitee has chosen their availability', () => {
       .table()
       .should('deep.equal', [
         ['', 'Rank', 'Date', 'Available Invitees', 'Invitees Total'],
-        ['', '1', 'Saturday, 3 January', '🤴🧙‍♂️', '2/2'],
-        ['', '2', 'Sunday, 4 January', '🤴🧙‍♂️', '2/2'],
-        ['', '3', 'Friday, 2 January', '🤴', '1/2'],
+        ['', '1', formattedDate('1970-01-03'), '🤴🧙‍♂️', '2/2'],
+        ['', '2', formattedDate('1970-01-04'), '🤴🧙‍♂️', '2/2'],
+        ['', '3', formattedDate('1970-01-02'), '🤴', '1/2'],
       ])
   })
 })
@@ -91,9 +101,49 @@ describe('when a decision has been made', () => {
     cy.setCookie('userId', 'inviteeID')
   })
 
-  it.skip('anyone can go back and amend it', () => {})
+  it('anyone can go back and amend it', function () {
+    cy.visit(`/${this.social.id}/decision`)
+    cy.contains(`Your social is on ${formattedDate('1970-01-03')}`)
+    cy.contains('BACK').click()
+    cy.contains('#best-dates', formattedDate('1970-01-02')).click()
+    cy.contains('button', 'NEXT').click()
+    cy.contains(`Your social is on ${formattedDate('1970-01-02')}`)
+  })
 
-  it.skip("redirects invitees who haven't seen it yet", () => {})
+  it("redirects invitees when they haven't seen the latest decision", function () {
+    cy.visit(`/${this.social.id}/everyone`)
+    cy.url('pathname').should('include', '/decision')
+    cy.waitUntil(() => cy.getCookie('decision'))
+
+    cy.clearCookie('decision')
+    cy.visit(`/${this.social.id}/you`)
+    cy.url('pathname').should('include', '/decision')
+    cy.waitUntil(() => cy.getCookie('decision'))
+    cy.clearCookie('decision')
+    cy.visit(`/${this.social.id}/invite`)
+    cy.url('pathname').should('include', '/decision')
+    cy.waitUntil(() => cy.getCookie('decision'))
+    cy.clearCookie('decision')
+    cy.visit(`/${this.social.id}`)
+    cy.url('pathname').should('include', '/decision')
+    cy.waitUntil(() => cy.getCookie('decision'))
+
+    cy.visit(`/${this.social.id}/everyone`)
+    cy.url('pathname').should('not.include', '/decision')
+    cy.visit(`/${this.social.id}/you`)
+    cy.url('pathname').should('not.include', '/decision')
+    cy.visit(`/${this.social.id}/invite`)
+    cy.url('pathname').should('not.include', '/decision')
+    cy.visit(`/${this.social.id}`)
+    cy.url('pathname').should('not.include', '/decision')
+
+    cy.task('updateSocial', {
+      id: this.social.id,
+      data: {decision: '1970-01-02'},
+    })
+    cy.visit(`/${this.social.id}/everyone`)
+    cy.url('pathname').should('include', '/decision')
+  })
 })
 
 describe('when an invitee joins the social', () => {
@@ -105,5 +155,14 @@ describe('when an invitee joins the social', () => {
 })
 
 describe('when an invitee from another timezone joins the social', () => {
+  // Not sure how to test this yet. Manually tested by changing OS timezone.
   it.skip('shows them the same dates as others disregarding timezones entirely', () => {})
 })
+
+function formattedDate(date) {
+  return new Date(date).toLocaleDateString(undefined, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  })
+}

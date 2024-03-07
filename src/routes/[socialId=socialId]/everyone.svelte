@@ -14,6 +14,7 @@
   import StreamingStatus from '$lib/StreamingStatus.svelte'
   import Inviter from '$lib/Inviter.svelte'
   import push from '$lib/push'
+  import cookie from 'cookie'
 
   const {getAnalytics} = getContext('analytics')
 
@@ -59,7 +60,7 @@
 
           const newDecision =
             social.decision &&
-            social.decision.value !== sessionStorage.getItem('decisionSeen')
+            social.decision.value !== cookie.parse(document.cookie).decision
           if (newDecision) goto('decision')
 
           status = '📡 Updated: someone joined the party!'

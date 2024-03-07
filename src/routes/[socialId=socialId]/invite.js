@@ -19,6 +19,7 @@ export async function get({params, locals}) {
     q.Get(q.Ref(q.Collection('social'), reference)),
   )
   const social = convertDatesToStrings(response.data)
+  if (social.decision) social.decision = social.decision.value
   const user = social.invitees[locals.userId]
 
   if (user) {
