@@ -1,16 +1,9 @@
-<script context="module">
-  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
-
-  // import {goto} from '$app/navigation'
-  // import Next from '$lib/Next.svelte'
-  // import {theme} from '$lib/theme.store'
-  // import {Form, Input, Progress} from 'spaper'
-  // import {onMount} from 'svelte'
-
-  // export const prerender = true
-</script>
-
 <script>
+  import Next from '$lib/Next.svelte'
+  import {theme} from '$lib/theme.store'
+  import {Progress} from 'spaper'
+  import {onMount} from 'svelte'
+
   let loading
   // TODO: Find a better way to do this.
   $theme.background = 'beer'
@@ -27,28 +20,17 @@
 <h1>The fastest way to find out when your friends are free</h1>
 <p>Let's start with your name</p>
 
+<!-- TODO: Add enhancement to get loading state again -->
+<!-- use:enhance={() => {
+  loading = true
+  return async ({update}) => {
+    loading = false
+    update()
+  }
+}} -->
 <!-- svelte-ignore missing-declaration -->
-<Form
-  on:submit={async e => {
-    loading = true
-
-    try {
-      const formData = new FormData(e.target)
-      const name = formData.get('name')
-
-      const response = await fetch('/create.json', {
-        method: 'POST',
-        body: formData,
-      })
-
-      const socialId = await response.text()
-      await goto(`/${socialId}/you?name=${name}`)
-    } finally {
-      loading = false
-    }
-  }}
->
-  <Input
+<form method="post">
+  <input
     id="name"
     class="margin-bottom-small"
     name="name"
@@ -62,4 +44,4 @@
       striped
     />
   </div>
-</Form>
+</form>

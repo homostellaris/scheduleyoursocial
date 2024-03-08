@@ -7,9 +7,9 @@ export async function handle({event, resolve}) {
   event.locals.userId = cookies.userId || uuid()
 
   // TODO https://github.com/sveltejs/kit/issues/1046
-  if (event.url.searchParams.has('_method')) {
-    event.method = event.url.searchParams.get('_method').toUpperCase()
-  }
+  // if (event.url.searchParams.has('_method')) {
+  //   event.method = event.url.searchParams.get('_method').toUpperCase()
+  // }
 
   const response = await resolve(event)
   if (!cookies.userId) {
@@ -23,16 +23,4 @@ export async function handle({event, resolve}) {
   }
 
   return response
-}
-
-export function getSession(event) {
-  return {
-    userId: event.locals.userId,
-    faunadb: {
-      domain: process.env.FAUNADB_DOMAIN,
-      port: process.env.FAUNADB_PORT,
-      scheme: process.env.FAUNADB_SCHEME,
-      secret: process.env.FAUNADB_INVITEE_SECRET,
-    },
-  }
 }

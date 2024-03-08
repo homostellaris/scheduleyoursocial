@@ -1,13 +1,9 @@
-<script context="module">
-  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
-
-  // import {Hero, Article} from 'spaper'
-  // import Todo from '$lib/Todo.svelte'
-  // import fantasyBoardGameNight from '../fantasy-board-games-night.jpeg'
-  // import competitiveGimli from '../competitive-gimli.gif'
-  // import Logo from '$lib/Logo.svelte'
-
-  // export const prerender = true
+<script>
+  import {Hero, Article} from 'spaper'
+  import Todo from '$lib/Todo.svelte'
+  import fantasyBoardGameNight from '../fantasy-board-games-night.jpeg'
+  import competitiveGimli from '../competitive-gimli.gif'
+  import Logo from '$lib/Logo.svelte'
 </script>
 
 <svelte:head>

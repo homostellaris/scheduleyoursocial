@@ -1,16 +1,12 @@
-<script context="module">
-  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
-
-  // import Retreat from '$lib/Back.svelte'
-  // import cookie from 'cookie'
-</script>
-
 <script>
+  import cookie from 'cookie'
+  import Retreat from '$lib/Back.svelte'
   import {onMount} from 'svelte'
 
-  export let social
+  export let data
+
   let friendlyDecision
-  $: friendlyDecision = new Date(social.decision).toLocaleDateString(
+  $: friendlyDecision = new Date(data.social.decision).toLocaleDateString(
     undefined,
     {
       weekday: 'long',
@@ -20,7 +16,7 @@
   )
 
   onMount(() => {
-    document.cookie = cookie.serialize('decision', social.decision)
+    document.cookie = cookie.serialize('decision', data.social.decision)
   })
 </script>
 

@@ -1,13 +1,10 @@
-<script context="module">
-  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
-
-  // import {goto} from '$app/navigation'
-  // import Onward from '$lib/Next.svelte'
-  // import {Input} from 'spaper'
-  // import {onMount} from 'svelte'
-</script>
-
 <script>
+  import Next from '$lib/Next.svelte'
+  import {Progress} from 'spaper'
+  import {onMount} from 'svelte'
+
+  let loading
+
   onMount(() => {
     document.getElementById('name').focus()
   })
@@ -20,19 +17,19 @@
 <h1>You've been invited to a social</h1>
 <p>Let's start with your name</p>
 <!-- svelte-ignore missing-declaration -->
-<form
-  on:submit|preventDefault={async e => {
-    const formData = new FormData(e.target)
-    const name = formData.get('name')
-
-    await fetch('./invite', {
-      method: 'POST',
-      body: formData,
-    })
-
-    await goto(`you?name=${name}`)
-  }}
->
-  <Input id="name" name="name" />
-  <Onward />
+<form method="post">
+  <input
+    id="name"
+    class="margin-bottom-small"
+    name="name"
+    style="text-transform: uppercase;"
+  />
+  <Next disabled={loading} />
+  <div>
+    <Progress
+      style={`visibility: ${loading ? 'visible' : 'hidden'};`}
+      infinite
+      striped
+    />
+  </div>
 </form>

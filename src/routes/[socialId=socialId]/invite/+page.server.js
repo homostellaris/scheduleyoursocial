@@ -2,6 +2,7 @@ import faunadb from 'faunadb'
 import {toDatabaseId} from '$lib/id'
 import convertDatesToStrings from '$lib/convertDatesToStrings'
 import notification from '$lib/server/notification'
+import {redirect} from '@sveltejs/kit'
 
 const q = faunadb.query
 
@@ -24,48 +25,41 @@ export async function load({params, locals}) {
 
   if (user) {
     const page = user.dates.length ? 'everyone' : 'you'
-    throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-    return {
-      status: 303,
-      headers: {
-        location: `/${socialId}/${page}`,
-      },
-    }
+    throw redirect(303, `/${socialId}/${page}`)
   }
 
   return {
-  social,
-  user,
+    social,
+    user,
+  }
 }
-}
 
-export async function POST({locals, params, request}) {
-  const socialId = params.socialId
-  const reference = toDatabaseId(socialId)
+export const actions = {
+  default: async ({locals, params, request}) => {
+    const socialId = params.socialId
+    const reference = toDatabaseId(socialId)
 
-  const data = await request.formData()
-  const name = data.get('name')
+    const data = await request.formData()
+    const name = data.get('name')
 
-  const {data: social} = await client.query(
-    q.Update(q.Ref(q.Collection('social'), reference), {
-      data: {
-        invitees: {
-          [locals.userId]: {
-            name,
+    const {data: social} = await client.query(
+      q.Update(q.Ref(q.Collection('social'), reference), {
+        data: {
+          invitees: {
+            [locals.userId]: {
+              name,
+            },
           },
         },
-      },
-    }),
-  )
+      }),
+    )
 
-  notification.send(social, locals.userId, {
-    title: `${name} joined the social`,
-    body: `That makes ${Object.keys(social.invitees).length} so far.`,
-    socialUrl: `${request.headers.get('origin')}/${socialId}/everyone`,
-  })
+    notification.send(social, locals.userId, {
+      title: `${name} joined the social`,
+      body: `That makes ${Object.keys(social.invitees).length} so far.`,
+      socialUrl: `${request.headers.get('origin')}/${socialId}/everyone`,
+    })
 
-  throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-  return {
-    status: 200,
-  }
+    throw redirect(303, `/${socialId}/you?name=${name}`)
+  },
 }

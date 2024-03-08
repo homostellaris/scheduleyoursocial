@@ -22,35 +22,12 @@ export async function load({params, locals, request}) {
   if (social.decision) social.decision = social.decision.value
   const user = social.invitees[locals.userId]
 
-  if (hasDecisionBeenSeen(request, social)) throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-  return decisionRedirect(socialId)
+  if (hasDecisionBeenSeen(request, social)) {
+    decisionRedirect(socialId)
+  }
 
   return {
-  social,
-  user,
-}
-}
-
-export async function PUT({locals, params, request}) {
-  const socialId = params.socialId
-  const reference = toDatabaseId(socialId)
-
-  const {dates} = await request.json()
-
-  await client.query(
-    q.Update(q.Ref(q.Collection('social'), reference), {
-      data: {
-        invitees: {
-          [locals.userId]: {
-            dates: dates.map(date => q.Date(date)),
-          },
-        },
-      },
-    }),
-  )
-
-  throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-  return {
-    status: 200,
+    social,
+    user,
   }
 }

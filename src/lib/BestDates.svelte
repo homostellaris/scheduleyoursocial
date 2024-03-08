@@ -55,7 +55,7 @@
         <td>
           <input
             bind:group={selected}
-            name="best-dates"
+            name="decision"
             type="radio"
             value={date}
           />
