@@ -1,4 +1,5 @@
 import cookie from 'cookie'
+import {redirect} from '@sveltejs/kit'
 
 export function hasDecisionBeenSeen(request, social) {
   const cookieHeader = request.headers.get('cookie')
@@ -7,10 +8,5 @@ export function hasDecisionBeenSeen(request, social) {
 }
 
 export function decisionRedirect(socialId) {
-  return {
-    status: 303,
-    headers: {
-      location: `/${socialId}/decision`,
-    },
-  }
+  throw redirect(303, `/${socialId}/decision`)
 }

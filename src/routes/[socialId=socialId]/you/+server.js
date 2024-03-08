@@ -1,9 +1,8 @@
+import {redirect} from '@sveltejs/kit'
 import faunadb from 'faunadb'
 import {toDatabaseId} from '$lib/id'
-import convertDatesToStrings from '$lib/convertDatesToStrings'
 
 const q = faunadb.query
-
 const client = new faunadb.Client({
   domain: process.env.FAUNADB_DOMAIN,
   port: process.env.FAUNADB_PORT,
@@ -11,21 +10,7 @@ const client = new faunadb.Client({
   secret: process.env.FAUNADB_SERVER_SECRET,
 })
 
-export async function load({params, locals}) {
-  const socialId = params.socialId
-  const reference = toDatabaseId(socialId)
-  const response = await client.query(
-    q.Get(q.Ref(q.Collection('social'), reference)),
-  )
-  const social = convertDatesToStrings(response.data)
-  const user = social.invitees[locals.userId]
-
-  return {
-  social,
-  user,
-}
-}
-
+/** @type {import('./$types').RequestHandler} */
 export async function PUT({locals, params, request}) {
   const socialId = params.socialId
   const reference = toDatabaseId(socialId)
@@ -44,8 +29,5 @@ export async function PUT({locals, params, request}) {
     }),
   )
 
-  throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-  return {
-    status: 200,
-  }
+  throw redirect(303, `/${socialId}/everyone`)
 }

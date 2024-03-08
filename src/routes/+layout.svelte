@@ -1,19 +1,13 @@
-<script context="module">
-  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
-
-  // import 'papercss/dist/paper.min.css'
-  // import {dev} from '$app/env'
-  // import Bubbles from '$lib/Bubbles/index.svelte'
-  // import Footer from '$lib/Footer.svelte'
-  // import {theme} from '$lib/theme.store'
-  // import * as Sentry from '@sentry/browser'
-  // import Plausible from 'plausible-tracker'
-  // import {onMount, setContext} from 'svelte'
-
-  // export const prerender = true
-</script>
-
 <script>
+  import 'papercss/dist/paper.min.css'
+  import {dev} from '$app/environment'
+  import Bubbles from '$lib/Bubbles/index.svelte'
+  import Footer from '$lib/Footer.svelte'
+  import {theme} from '$lib/theme.store'
+  import * as Sentry from '@sentry/browser'
+  import Plausible from 'plausible-tracker'
+  import {onMount, setContext} from 'svelte'
+
   let plausible
 
   setContext('analytics', {

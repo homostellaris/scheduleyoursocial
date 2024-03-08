@@ -1,3 +1,4 @@
+// TODO: Use this instead of hard-coding application server key
 // import { VAPID_PUBLIC_KEY } from '$env/static/public'
 
 // This looks weird for backwards compatibility: https://web.dev/push-notifications-subscribing-a-user/#requesting-permission

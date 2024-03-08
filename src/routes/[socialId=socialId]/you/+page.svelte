@@ -1,19 +1,14 @@
-<script context="module">
-  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
-
-  // import {Form, Input, Progress} from 'spaper'
-  // import Datepicker from '$lib/Datepicker.svelte'
-  // import {goto} from '$app/navigation'
-  // import Next from '$lib/Next.svelte'
-  // import {page} from '$app/stores'
-</script>
-
 <script>
-  export let user
-  export let social
+  import {Progress} from 'spaper'
+  import Datepicker from '$lib/Datepicker.svelte'
+  import {goto} from '$app/navigation'
+  import Next from '$lib/Next.svelte'
+  import {page} from '$app/stores'
 
-  let organizer = social.invitees[social.organizer]
-  let name = $page.url.searchParams.get('name') || user.name
+  export let data
+
+  let organizer = data.social.invitees[data.social.organizer]
+  let name = $page.url.searchParams.get('name') || data.user.name
   let loading
 
   // Datepicker doesn't update bound array properly so unfortunately need to start with a fresh array everytime they return here.
@@ -30,7 +25,7 @@
 <!-- Need to add ability to edit name here too because pre-rendered page won't show data if for some reason the user comes back here. -->
 <h1>Hello {name}, when are you free?</h1>
 <!-- svelte-ignore missing-declaration -->
-<Form
+<form
   id="you"
   on:submit={async _ => {
     loading = true
@@ -59,4 +54,4 @@
       striped
     />
   </div>
-</Form>
+</form>

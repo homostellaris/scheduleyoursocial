@@ -10,6 +10,8 @@ describe('when an organiser wants to schedule a social', () => {
     cy.contains('button', 'NEXT').click()
 
     cy.url().should('include', '/you')
+    // Force a wait for the page to re-render and display date properly, not sure why this re-render happens.
+    cy.contains('January 1970').should('exist')
     cy.get('.calendar-date').last().click()
     cy.contains('button', 'NEXT').click()
 

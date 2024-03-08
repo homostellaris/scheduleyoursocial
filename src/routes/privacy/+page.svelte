@@ -1,12 +1,6 @@
-<script context="module">
-  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
-
-  // import {theme} from '$lib/theme.store'
-
-  // export const prerender = true
-</script>
-
 <script>
+  import {theme} from '$lib/theme.store'
+
   $theme.background = 'beer'
 </script>
 

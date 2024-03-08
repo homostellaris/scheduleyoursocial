@@ -1,8 +1,7 @@
 <script>
   import {Form, Progress, Switch} from 'spaper'
   import {goto} from '$app/navigation'
-  import {page, session} from '$app/stores'
-  // import Datepicker from '$lib/Datepicker.svelte'
+  import {page} from '$app/stores'
   import convertDatesToStrings from '$lib/convertDatesToStrings'
   import BestDates from '$lib/BestDates.svelte'
   import {toDatabaseId} from '$lib/id'
@@ -18,16 +17,14 @@
 
   const {getAnalytics} = getContext('analytics')
 
-  export let social
-  export let user
-
+  export let data
   let invitees
   let inviteesCount
-  let decision = social.decision || null
+  let decision = data.social.decision || null
   let status = 'Not started'
   let loading
 
-  $: invitees = social.invitees
+  $: invitees = data.social.invitees
   $: inviteesCount = Object.values(invitees).length
   $: inviteesWithDates = Object.values(invitees).filter(
     invitee => invitee.dates && invitee.dates.length,
@@ -41,7 +38,7 @@
 
   onMount(async () => {
     const q = faunadb.query
-    const client = new faunadb.Client({...$session.faunadb})
+    const client = new faunadb.Client({...$page.data.faunadb})
 
     const databaseId = toDatabaseId($page.params.socialId)
     const docRef = q.Ref(q.Collection('social'), databaseId)
@@ -53,14 +50,17 @@
       stream = client.stream
         .document(docRef)
         .on('snapshot', snapshot => {
-          social = convertDatesToStrings(snapshot.data)
+          console.debug('snapshot')
+          data.social = convertDatesToStrings(snapshot.data)
         })
         .on('version', version => {
-          social = convertDatesToStrings(version.document.data)
+          console.debug('version')
+          data.social = convertDatesToStrings(version.document.data)
 
           const newDecision =
-            social.decision &&
-            social.decision.value !== cookie.parse(document.cookie).decision
+            data.social.decision &&
+            data.social.decision.value !==
+              cookie.parse(document.cookie).decision
           if (newDecision) goto('decision')
 
           status = '📡 Updated: someone joined the party!'
@@ -87,13 +87,13 @@
 
     if (
       pushSubscription &&
-      (!user.pushSubscriptions ||
-        !Object.values(user.pushSubscriptions).find(
+      (!data.user.pushSubscriptions ||
+        !Object.values(data.user.pushSubscriptions).find(
           savedPushSubscription =>
             pushSubscription.endpoint === savedPushSubscription,
         ))
     ) {
-      await fetch('push.json', {
+      await fetch('push', {
         method: 'POST',
         body: JSON.stringify({
           push: pushSubscription,
@@ -139,7 +139,7 @@
       if (!switchOn) {
         getAnalytics().trackEvent('Disable push notifications')
         await push.unsubscribe()
-        await fetch('push.json', {
+        await fetch('push', {
           method: 'DELETE',
           body: JSON.stringify({
             push: pushSubscription,
@@ -154,7 +154,7 @@
       const permissionGranted = pushPermission === 'granted'
       if (permissionGranted) {
         pushSubscription = await push.subscribe()
-        await fetch('push.json', {
+        await fetch('push', {
           method: 'POST',
           body: JSON.stringify({
             push: pushSubscription,
@@ -171,35 +171,12 @@
   </Switch>
 </Form>
 
-<!-- <h2>Here's everyone's availability</h2>
-<Datepicker disabledTo={10000} selected={dates}/> -->
-
 {#if inviteesWithDates.length > 1}
   <h1>Choose a date</h1>
   <!-- svelte-ignore missing-declaration -->
-  <Form
-    id="everyone"
-    on:submit={async e => {
-      loading = true
-
-      try {
-        const formData = new FormData(e.target)
-        const decision = formData.get('best-dates')
-
-        await fetch('everyone', {
-          method: 'PATCH',
-          body: JSON.stringify({
-            decision,
-          }),
-        })
-        goto('decision')
-      } finally {
-        loading = false
-      }
-    }}
-  >
+  <form id="everyone" method="post">
     <BestDates {invitees} bind:selected={decision} />
-  </Form>
+  </form>
 {:else}
   <h1>Next steps</h1>
   <ol>
