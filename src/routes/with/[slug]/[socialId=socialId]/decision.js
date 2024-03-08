@@ -11,7 +11,7 @@ const client = new faunadb.Client({
   secret: process.env.FAUNADB_SERVER_SECRET,
 })
 
-export async function get({params, locals}) {
+export async function GET({params, locals}) {
   const socialId = params.socialId
   const reference = toDatabaseId(socialId)
   const response = await client.query(
