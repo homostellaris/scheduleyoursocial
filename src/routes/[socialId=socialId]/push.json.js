@@ -11,7 +11,7 @@ const client = new faunadb.Client({
   secret: process.env.FAUNADB_SERVER_SECRET,
 })
 
-export async function post({locals, params, request}) {
+export async function POST({locals, params, request}) {
   const socialId = params.socialId
   const reference = toDatabaseId(socialId)
   // TODO: Use FormData instead.

@@ -10,7 +10,7 @@ const client = new faunadb.Client({
   secret: process.env.FAUNADB_SERVER_SECRET,
 })
 
-export const post = async ({request, locals}) => {
+export async function POST({request, locals}) {
   const data = await request.formData()
   const name = data.get('name')
 
