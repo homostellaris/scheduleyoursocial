@@ -1,4 +1,5 @@
 <script>
+  import {page} from '$app/stores'
   import {Button} from 'spaper'
 </script>
 
@@ -6,10 +7,12 @@
   <div>
     <Button id="feedback" type="primary">Leave feedback</Button>
   </div>
-  <!-- TODO: Use something like `class:active={$page.path === '/about'}` to indicate which page we're currently on. -->
-  <span
-    ><a href="/" data-sveltekit-preload-data>Schedule another social</a></span
-  >
+
+  {#if $page.url.pathname !== '/'}
+    <span
+      ><a href="/" data-sveltekit-preload-data>Schedule another social</a></span
+    >
+  {/if}
   <span><a href="/privacy" data-sveltekit-preload-data>Privacy</a></span>
 </footer>
 
