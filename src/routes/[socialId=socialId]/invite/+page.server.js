@@ -25,7 +25,7 @@ export async function load({params, locals}) {
 
   if (user) {
     const page = user.dates.length ? 'everyone' : 'you'
-    throw redirect(303, `/${socialId}/${page}`)
+    redirect(303, `/${socialId}/${page}`);
   }
 
   return {
@@ -60,6 +60,6 @@ export const actions = {
       socialUrl: `${request.headers.get('origin')}/${socialId}/everyone`,
     })
 
-    throw redirect(303, `/${socialId}/you?name=${name}`)
+    redirect(303, `/${socialId}/you?name=${name}`);
   },
 }

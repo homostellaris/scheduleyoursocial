@@ -29,5 +29,5 @@ export async function PUT({locals, params, request}) {
     }),
   )
 
-  throw redirect(303, `/${socialId}/everyone`)
+  redirect(303, `/${socialId}/everyone`);
 }
