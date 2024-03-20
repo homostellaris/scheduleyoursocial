@@ -29,6 +29,6 @@ export const actions = {
     )
     const socialId = toSocialId(response.ref.id)
 
-    throw redirect(303, `/${socialId}/you`)
+    redirect(303, `/${socialId}/you`);
   },
 }

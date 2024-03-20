@@ -70,6 +70,6 @@ export const actions = {
       socialUrl: `${request.headers.get('origin')}/${socialId}/decision`,
     })
 
-    throw redirect(303, `/${socialId}/decision`)
+    redirect(303, `/${socialId}/decision`);
   },
 }
