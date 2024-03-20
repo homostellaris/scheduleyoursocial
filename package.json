@@ -28,7 +28,7 @@
     "netlify-cli": "^15.8.1",
     "prettier": "^3.2.5",
     "prettier-plugin-svelte": "^3.1.2",
-    "svelte": "^3.44.0"
+    "svelte": "^4.0.0"
   },
   "type": "module",
   "dependencies": {
