@@ -69,12 +69,12 @@
     --pink: rgba(218, 88, 218, 0.747);
 
     /* Paper CSS overrides */
-    --primary: var(--purple);
+    /* --primary: var(--purple); */
     --primary-light: var(--light-beer);
     /* --secondary: var(--pink); */
-    --success: #608d1c;
-    --success-light: var(--good);
-    /* --main-background: var(--beer); */
+    /* --success: #608d1c; */
+    /* --success-light: var(--good); */
+    /* --main-background: #ecb473; */
   }
 
   :global(#sentry-feedback) {
