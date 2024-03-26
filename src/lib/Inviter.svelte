@@ -72,4 +72,8 @@
     text-align: center;
     width: 45ch;
   }
+
+  input {
+    max-width: 100%;
+  }
 </style>
