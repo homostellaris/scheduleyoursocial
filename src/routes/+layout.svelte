@@ -48,11 +48,10 @@
   })
 </script>
 
-{#if background === 'beer'}
-  <Bubbles />
-{/if}
-
 <div class="main-container">
+  {#if background === 'beer'}
+    <Bubbles />
+  {/if}
   <main>
     <slot />
   </main>
@@ -177,10 +176,6 @@
     font-family: monospace;
   }
 
-  /* :global(html) {
-    font-size: calc(1em + 0.5vw);
-  } */
-
   :global(h1, h2, h3, p, button, li) {
     color: white;
     /* font-size: x-large; */
@@ -241,16 +236,24 @@
     /* padding: 0.24em; */
   }
 
+  :global(html) {
+    /* font-size: calc(1em + 0.5vw); */
+    height: 100%;
+    width: 100%;
+  }
+
   :global(body) {
     position: relative;
+    height: 100%;
+    width: 100%;
   }
 
   :global(.main-container) {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    padding: 1rem;
+    min-height: 100%;
     max-width: 100vw;
+    position: relative;
   }
 
   main {
@@ -260,6 +263,7 @@
     flex-grow: 1;
     justify-content: center;
     margin: auto;
+    padding: 1rem;
   }
 
   /* Paper CSS & overrides */
