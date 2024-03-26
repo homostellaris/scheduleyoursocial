@@ -4,7 +4,7 @@
   "scripts": {
     "build": "vite build",
     "createFixtures": "./habitat.sh node ./db/createSocial.js",
-    "dev": "./habitat.sh vite dev --port 6602",
+    "dev": "./habitat.sh vite dev --port 6602 --host",
     "db": "docker run --rm --name faunadb -p 8443:8443 -v scheduleyoursocial:/var/lib/faunadb fauna/faunadb",
     "db:init": "./habitat.sh fauna eval --file db/init.fql --secret $FAUNADB_SERVER_SECRET --port $FAUNADB_PORT --scheme $FAUNADB_SCHEME --domain $FAUNADB_DOMAIN",
     "getAllSocials": "./habitat.sh fauna eval --file db/get-all-socials.fql --secret $FAUNADB_SERVER_SECRET --port $FAUNADB_PORT --scheme $FAUNADB_SCHEME --domain $FAUNADB_DOMAIN | jq",
