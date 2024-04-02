@@ -61,14 +61,16 @@
     --praecox-calendar-custom-number-font-family: 'Port Lligat Slab', cursive;
     --praecox-calendar-custom-font-main-color: #181818;
     --praecox-calendar-custom-border-radius: 25px;
-    --praecox-calendar-custom-width: 320px;
-    --praecox-calendar-custom-height: 320px;
-    --praecox-calendar-custom-inner-width: 230px;
-    --praecox-calendar-custom-inner-height: 230px;
+    --praecox-calendar-custom-inner-width: min(80vw, 230px);
+    --praecox-calendar-custom-inner-height: min(80vw, 230px);
+    --praecox-calendar-custom-width: calc(
+      var(--praecox-calendar-custom-inner-width) + 48px
+    );
+    --praecox-calendar-custom-height: calc(
+      var(--praecox-calendar-custom-inner-height) + 64px
+    );
     --praecox-calendar-custom-background: rgba(255, 255, 255, 0.8);
     --praecox-calendar-custom-weekend-color: none;
-
-    margin: 21px;
   }
 
   :global(table tbody tr td) {

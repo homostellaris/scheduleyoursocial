@@ -4,9 +4,9 @@
 </script>
 
 <footer>
-  <div>
+  <span>
     <Button id="feedback" type="primary">Leave feedback</Button>
-  </div>
+  </span>
 
   {#if $page.url.pathname !== '/'}
     <span
@@ -17,30 +17,23 @@
 </footer>
 
 <style>
+  :global(#feedback) {
+    margin: 0;
+  }
+
   footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 1rem;
+    gap: 1rem;
   }
 
   footer a {
     font-weight: bold;
   }
 
-  div,
-  span {
-    margin: 0.5rem;
-    width: min-content;
-  }
-
-  @media (min-width: 480px) {
-    /* Why dis? */
-    footer {
-      padding: 40px 0;
-    }
-    div,
-    span {
-      width: max-content;
-    }
+  footer span {
+    text-align: center;
   }
 </style>
