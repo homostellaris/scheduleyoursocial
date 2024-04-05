@@ -8,7 +8,7 @@
     <Button id="feedback" type="primary">Leave feedback</Button>
   </span>
 
-  {#if $page.url.pathname !== '/'}
+  {#if $page.url.pathname.match(/[\d\w]{12}/)}
     <span
       ><a href="/" data-sveltekit-preload-data>Schedule another social</a></span
     >
