@@ -35,6 +35,9 @@ export async function load({params, locals, request}) {
 }
 
 export const actions = {
+  /**
+   * @type {import('@sveltejs/kit').Action<{socialId: string}, void>}
+   */
   default: async ({locals, params, request}) => {
     const socialId = params.socialId
     const reference = toDatabaseId(socialId)
@@ -70,6 +73,6 @@ export const actions = {
       socialUrl: `${request.headers.get('origin')}/${socialId}/decision`,
     })
 
-    redirect(303, `/${socialId}/decision`);
+    redirect(303, `/${socialId}/decision`)
   },
 }

@@ -12,6 +12,7 @@ const client = new faunadb.Client({
   secret: process.env.FAUNADB_SERVER_SECRET,
 })
 
+/** @type {import('./$types').PageServerLoad} */
 export async function load({params, locals, request}) {
   const socialId = params.socialId
   const reference = toDatabaseId(socialId)
