@@ -248,7 +248,15 @@
     width: 100%;
   }
 
-  :global(.main-container) {
+  .main-container {
+    background: linear-gradient(
+      to right,
+      rgba(192, 86, 0, 1) 0%,
+      rgba(220, 112, 0, 1) 21%,
+      rgba(232, 124, 0, 1) 51%,
+      rgba(232, 124, 0, 1) 81%,
+      rgba(220, 112, 0, 1) 100%
+    );
     display: flex;
     flex-direction: column;
     min-height: 100%;
@@ -264,10 +272,8 @@
     justify-content: center;
     margin: auto;
     padding: 1rem;
+    position: relative;
   }
-
-  /* Paper CSS & overrides */
-  /* @import "papercss/dist/paper.min.css"; */
 
   :global(a) {
     background-image: none;
