@@ -27,6 +27,7 @@
     align-items: center;
     padding: 1rem;
     gap: 1rem;
+    position: relative;
   }
 
   footer a {
