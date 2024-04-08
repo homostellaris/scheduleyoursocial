@@ -26,7 +26,7 @@
 
 <style>
   h1,
-  :global(p),
+  :global(.hero-text-lead),
   li {
     color: black;
     margin: 1rem 0;
