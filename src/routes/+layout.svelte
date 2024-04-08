@@ -48,7 +48,19 @@
   })
 </script>
 
-<div class="main-container">
+<div
+  class="main-container"
+  style:background={background === 'beer'
+    ? `linear-gradient(
+  to right,
+  rgba(192, 86, 0, 1) 0%,
+  rgba(220, 112, 0, 1) 21%,
+  rgba(232, 124, 0, 1) 51%,
+  rgba(232, 124, 0, 1) 81%,
+  rgba(220, 112, 0, 1) 100%
+)`
+    : 'white'}
+>
   {#if background === 'beer'}
     <Bubbles />
   {/if}
@@ -249,14 +261,6 @@
   }
 
   .main-container {
-    background: linear-gradient(
-      to right,
-      rgba(192, 86, 0, 1) 0%,
-      rgba(220, 112, 0, 1) 21%,
-      rgba(232, 124, 0, 1) 51%,
-      rgba(232, 124, 0, 1) 81%,
-      rgba(220, 112, 0, 1) 100%
-    );
     display: flex;
     flex-direction: column;
     min-height: 100%;
