@@ -1,10 +1,8 @@
 <script>
-  import 'papercss/dist/paper.min.css'
   import {dev} from '$app/environment'
-  import Bubbles from '$lib/Bubbles/index.svelte'
-  import Footer from '$lib/Footer.svelte'
-  import {theme} from '$lib/theme.store'
+  import Page from '$lib/Page.svelte'
   import * as Sentry from '@sentry/browser'
+  import 'papercss/dist/paper.min.css'
   import Plausible from 'plausible-tracker'
   import {onMount, setContext} from 'svelte'
 
@@ -14,9 +12,6 @@
     getAnalytics: () => plausible,
     getFeedback: () => feedback,
   })
-
-  let background
-  $: background = $theme.background
 
   onMount(() => {
     const feedback = Sentry.feedbackIntegration({
@@ -48,30 +43,18 @@
   })
 </script>
 
-<div
-  class="main-container"
-  style:background={background === 'beer'
-    ? `linear-gradient(
-  to right,
-  rgba(192, 86, 0, 1) 0%,
-  rgba(220, 112, 0, 1) 21%,
-  rgba(232, 124, 0, 1) 51%,
-  rgba(232, 124, 0, 1) 81%,
-  rgba(220, 112, 0, 1) 100%
-)`
-    : 'white'}
->
-  {#if background === 'beer'}
-    <Bubbles />
-  {/if}
-  <main>
-    <slot />
-  </main>
-  <Footer />
-</div>
+<slot />
 
 <style>
   :root {
+    --background: linear-gradient(
+      to right,
+      rgba(192, 86, 0, 1) 0%,
+      rgba(220, 112, 0, 1) 21%,
+      rgba(232, 124, 0, 1) 51%,
+      rgba(232, 124, 0, 1) 81%,
+      rgba(220, 112, 0, 1) 100%
+    );
     --beer: #e87c00;
     --light-beer: rgba(255, 156, 26, 0.836);
     --good: #adff2f;
@@ -180,6 +163,18 @@
     font-family: 'Amatic SC', cursive;
   }
 
+  :global(html) {
+    /* font-size: calc(1em + 0.5vw); */
+    height: 100%;
+    width: 100%;
+  }
+
+  :global(body) {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+
   :global(label, input) {
     font-family: 'Port Lligat Slab', serif;
   }
@@ -246,37 +241,6 @@
     display: inline-block;
     font-size: 1em;
     /* padding: 0.24em; */
-  }
-
-  :global(html) {
-    /* font-size: calc(1em + 0.5vw); */
-    height: 100%;
-    width: 100%;
-  }
-
-  :global(body) {
-    position: relative;
-    height: 100%;
-    width: 100%;
-  }
-
-  .main-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-    max-width: 100vw;
-    position: relative;
-  }
-
-  main {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: center;
-    margin: auto;
-    padding: 1rem;
-    position: relative;
   }
 
   :global(a) {

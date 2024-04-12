@@ -5,7 +5,7 @@
 
   const {getAnalytics} = getContext('analytics')
 
-  const inviteUrl = $page.url.origin + '/' + $page.params.socialId + '/invite'
+  const inviteUrl = new URL('invite', $page.url).href
   let inviteDialogText = 'Please copy this link'
 
   let showModal

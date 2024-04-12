@@ -1,15 +1,14 @@
 <script>
-  import {theme} from '$lib/theme.store'
+  import Page from '$lib/Page.svelte'
   import Promo from '$lib/Promo.svelte'
-
-  $theme.background = 'plain'
 </script>
 
-<div class="content">
-  <slot />
-</div>
-
-<Promo />
+<Page --background="white">
+  <div class="content">
+    <slot />
+  </div>
+  <Promo />
+</Page>
 
 <style>
   .content {
