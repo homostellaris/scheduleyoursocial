@@ -8,6 +8,7 @@
     "db": "docker run --rm --name faunadb -p 8443:8443 -v scheduleyoursocial:/var/lib/faunadb fauna/faunadb",
     "db:init": "./habitat.sh fauna eval --file db/init.fql --secret $FAUNADB_SERVER_SECRET --port $FAUNADB_PORT --scheme $FAUNADB_SCHEME --domain $FAUNADB_DOMAIN",
     "getAllSocials": "./habitat.sh fauna eval --file db/get-all-socials.fql --secret $FAUNADB_SERVER_SECRET --port $FAUNADB_PORT --scheme $FAUNADB_SCHEME --domain $FAUNADB_DOMAIN | jq",
+    "getAllHosts": "./habitat.sh fauna eval --file db/get-all-hosts.fql --secret $FAUNADB_SERVER_SECRET --port $FAUNADB_PORT --scheme $FAUNADB_SCHEME --domain $FAUNADB_DOMAIN | jq",
     "package": "svelte-kit package",
     "preview": "./habitat.sh vite preview --port 6602",
     "unit": "ava **/*.spec.js",

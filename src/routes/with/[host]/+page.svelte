@@ -8,6 +8,8 @@
   export let data
   let loading
 
+  console.log({data})
+
   onMount(() => {
     document.getElementById('name').focus()
   })
@@ -17,7 +19,9 @@
   <title>Schedule your social with {data.host}</title>
 </svelte:head>
 
-<h1>Schedule your social with {data.host}</h1>
+<img src={data.image} alt="" />
+<h1>Schedule your social</h1>
+<h2>with {data.host}</h2>
 <p>Let's start with your name</p>
 
 <!-- svelte-ignore missing-declaration -->
