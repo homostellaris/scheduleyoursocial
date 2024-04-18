@@ -8,5 +8,5 @@ export function hasDecisionBeenSeen(request, social) {
 }
 
 export function decisionRedirect(socialId) {
-  redirect(303, `/${socialId}/decision`);
+  redirect(303, 'decision')
 }

@@ -1,8 +1,25 @@
 If(
 	Exists(Collection('social')),
-	'Collection already exists.',
+	'Collection already exists: social',
 	CreateCollection({name: 'social'})
 )
+
+If(
+	Exists(Collection('host')),
+	'Collection already exists: host',
+	CreateCollection({name: 'host'})
+)
+
+CreateIndex({
+  name: 'host_by_slug',
+  source: Collection('host'),
+  terms: [
+    {
+      field: ['data', 'slug']
+    }
+  ],
+	unique: true
+})
 
 CreateRole({
 	name: 'invitee',

@@ -4,9 +4,6 @@
   export let data
 </script>
 
-<Page
-  --background={data.theme.background.color}
-  effect={data.theme.background.effect}
->
+<Page --background={data.backgroundColor} effect={data.backgroundEffect}>
   <slot />
 </Page>
