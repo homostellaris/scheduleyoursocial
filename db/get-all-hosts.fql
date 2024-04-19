@@ -1,0 +1,4 @@
+Map(
+	Paginate(Documents(Collection('host')), {size: 10000}),
+	Lambda(x => Get(x))
+)

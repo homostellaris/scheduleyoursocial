@@ -82,7 +82,6 @@
 <style>
   #best-dates {
     font-size: x-large;
-    color: white;
     text-align: left;
     font-family: 'Port Lligat Slab', serif;
   }

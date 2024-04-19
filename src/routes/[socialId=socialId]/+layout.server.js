@@ -1,4 +1,5 @@
 // TODO: Make everywhere use this fauna config
+// TODO: Handle all redirects in one place here
 /** @type {import('./$types').PageServerLoad} */
 export function load(event) {
   return {

@@ -8,9 +8,8 @@
 </script>
 
 <span
-  ><Button {disabled} {form} type="success" nativeType="submit">NEXT</Button
-  ></span
->
+  ><Button {disabled} {form} type="success" nativeType="submit">NEXT</Button>
+</span>
 
 <style>
   span {

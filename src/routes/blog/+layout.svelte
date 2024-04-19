@@ -16,9 +16,9 @@
     /* font-size: 1rem; */
   }
 
-  :global(.content *) {
+  /* :global(.content *) {
     color: black;
-  }
+  } */
   :global(.content h1),
   :global(.content h2),
   :global(.content h3) {

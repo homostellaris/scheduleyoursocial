@@ -21,7 +21,7 @@
 </svelte:head>
 
 <Page>
-  <Logo width={100} />
+  <Logo width={100} --margin="1rem" />
   <h1>Schedule Your Social</h1>
   <p>Let's start with your name</p>
 

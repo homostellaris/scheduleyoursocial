@@ -9,7 +9,7 @@
 <style>
   img {
     display: inline-block;
-    margin: 0 1rem 0 0;
+    margin: var(--margin, 0 1rem 0 0);
     vertical-align: middle;
   }
 </style>

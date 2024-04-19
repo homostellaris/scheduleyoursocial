@@ -1,7 +1,8 @@
 import faunadb from 'faunadb'
 import {toDatabaseId} from '$lib/id'
 import convertDatesToStrings from '$lib/convertDatesToStrings'
-import {decisionRedirect, hasDecisionBeenSeen} from '$lib/redirectToDecision'
+import {hasDecisionBeenSeen} from '$lib/redirectToDecision'
+import {redirect} from '@sveltejs/kit'
 
 const q = faunadb.query
 
@@ -24,7 +25,7 @@ export async function load({params, locals, request}) {
   const user = social.invitees[locals.userId]
 
   if (hasDecisionBeenSeen(request, social)) {
-    decisionRedirect(socialId)
+    redirect(303, `${socialId}/decision`)
   }
 
   return {

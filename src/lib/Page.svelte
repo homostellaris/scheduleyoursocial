@@ -16,6 +16,7 @@
 </div>
 
 <style>
+  /* TODO: Add stylish gradient that works for any color (just declare it before the background var with a comma separation) */
   .main-container {
     background: var(--background);
     display: flex;
