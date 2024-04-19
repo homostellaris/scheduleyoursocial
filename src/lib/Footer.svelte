@@ -5,7 +5,9 @@
 
 <footer>
   <span>
-    <Button id="feedback" type="primary">Leave feedback</Button>
+    <Button id="feedback" outline="primary" --main-background="transparent"
+      >Leave feedback</Button
+    >
   </span>
 
   {#if $page.url.pathname.match(/[\d\w]{12}/)}

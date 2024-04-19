@@ -6,9 +6,8 @@
 
   /** @type {import('./$types').PageData} */
   export let data
+  console.log(data)
   let loading
-
-  console.log({data})
 
   onMount(() => {
     document.getElementById('name').focus()
@@ -21,7 +20,12 @@
 
 <img src={data.image} alt="" />
 <h1>Schedule your social</h1>
-<h2>with {data.host}</h2>
+<h2 class="font-secondary">
+  <!-- TODO: Find out how to make target blank work -->
+  with {#if data.link}<a href={data.link} target="_blank" class="font-secondary"
+      >{data.host}</a
+    >{:else}{data.host}{/if}
+</h2>
 <p>Let's start with your name</p>
 
 <!-- svelte-ignore missing-declaration -->
@@ -39,7 +43,7 @@
       })
 
       const socialId = await response.text()
-      await goto(`/with/${data.host}/${socialId}/you?name=${name}`)
+      await goto(`/with/${data.slug}/${socialId}/you?name=${name}`)
     } finally {
       loading = false
     }

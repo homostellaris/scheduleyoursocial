@@ -1,8 +1,6 @@
 <script>
   import {dev} from '$app/environment'
-  import Page from '$lib/Page.svelte'
   import * as Sentry from '@sentry/browser'
-  import 'papercss/dist/paper.min.css'
   import Plausible from 'plausible-tracker'
   import {onMount, setContext} from 'svelte'
 
@@ -65,7 +63,7 @@
 
     /* Paper CSS overrides */
     /* --primary: var(--purple); */
-    --primary-light: var(--light-beer);
+    /* --primary-light: var(--light-beer); */
     /* --secondary: var(--pink); */
     /* --success: #608d1c; */
     /* --success-light: var(--good); */
@@ -80,19 +78,19 @@
     --left: calc(50% - 160px);
   }
 
-  :global(h1, h2, h3, h4, h5, h6) {
-    font-family: 'Amatic SC', cursive;
-  }
-
   :global(
-      html,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 html,
       body,
       button,
       span,
       applet,
       object,
       iframe,
-      p,
       blockquote,
       pre,
       a,
@@ -161,6 +159,23 @@
       video
     ) {
     font-family: 'Amatic SC', cursive;
+    /* color: var(--primary); */
+  }
+
+  :global(p, label, input) {
+    font-family: 'Port Lligat Slab', serif;
+    /* color: var(--primary); */
+  }
+
+  :global(.font-primary) {
+    font-family: 'Amatic SC', cursive;
+  }
+  :global(.font-secondary) {
+    font-family: 'Port Lligat Slab', serif;
+  }
+
+  :global(code) {
+    font-family: monospace;
   }
 
   :global(html) {
@@ -175,16 +190,7 @@
     width: 100%;
   }
 
-  :global(label, input) {
-    font-family: 'Port Lligat Slab', serif;
-  }
-
-  :global(code) {
-    font-family: monospace;
-  }
-
   :global(h1, h2, h3, p, button, li) {
-    color: white;
     /* font-size: x-large; */
     text-align: center;
   }
@@ -225,8 +231,7 @@
   }
 
   :global(button) {
-    color: black;
-    cursor: pointer;
+    /* cursor: pointer; */
     font-weight: bold;
   }
 
@@ -235,12 +240,10 @@
   }
 
   :global(input, button) {
-    /* border-radius: 0.2em; */
     background-color: white;
-    color: black;
+    /* color: black; */
     display: inline-block;
     font-size: 1em;
-    /* padding: 0.24em; */
   }
 
   :global(a) {

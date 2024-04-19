@@ -31,7 +31,21 @@ CreateRole({
 		}
 	}
 })
-
 CreateKey({
 	role: Role('invitee')
+})
+
+CreateRole({
+	name: 'host_manager',
+	privileges: {
+		resource: Collection('host'),
+		actions: {
+			create: true,
+			read: true,
+			write: true,
+		}
+	}
+})
+CreateKey({
+	role: Role('host_manager')
 })
