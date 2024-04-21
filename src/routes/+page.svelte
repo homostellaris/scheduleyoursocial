@@ -1,4 +1,5 @@
 <script>
+  import Logo from '$lib/Logo.svelte'
   import {goto} from '$app/navigation'
   import Next from '$lib/Next.svelte'
   import {theme} from '$lib/theme.store'
@@ -18,7 +19,8 @@
   <title>The fastest way to find out when your friends are free</title>
 </svelte:head>
 
-<h1>The fastest way to find out when your friends are free</h1>
+<Logo width={100} />
+<h1>Schedule Your Social</h1>
 <p>Let's start with your name</p>
 
 <!-- svelte-ignore missing-declaration -->
