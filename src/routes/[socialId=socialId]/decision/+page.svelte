@@ -20,6 +20,14 @@
   })
 </script>
 
+<svelte:head>
+  <script
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1845547317012102"
+    crossorigin="anonymous"
+  ></script>
+</svelte:head>
+
 <h1>Your social is on {friendlyDecision}</h1>
 <p>
   Have fun 🎉 and if you found this app helpful then please share it with others
