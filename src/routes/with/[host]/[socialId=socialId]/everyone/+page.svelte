@@ -33,8 +33,12 @@
   let pushBrowserSupport
   let pushPermission
   let pushSubscription
-  let pushSwitch = true
-  $: pushSwitch = pushBrowserSupport && pushPermission !== 'denied'
+  let pushSwitch = false
+  $: pushSwitch = !!(
+    pushBrowserSupport &&
+    pushPermission === 'granted' &&
+    pushSubscription
+  )
 
   onMount(async () => {
     const q = faunadb.query

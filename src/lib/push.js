@@ -31,13 +31,16 @@ function getExistingSubscription() {
 function subscribe() {
   return navigator.serviceWorker
     .register('/push-notification-service-worker.js')
+    .then(_registration => {
+      return navigator.serviceWorker.ready
+    })
     .then(registration => {
+      console.info('Service worker ready.')
       const subscribeOptions = {
         userVisibleOnly: true,
         applicationServerKey:
           'BIJTw4YGppJBHll2m7OTLZ1Sj44nlAmwgZt-nr3qbciS_QsbSNlGRh1fjpMjmWyZ8hpeBa0w2wUIJMb3LNBP0K4',
       }
-
       return registration.pushManager.subscribe(subscribeOptions)
     })
     .then(pushSubscription => {
@@ -49,7 +52,11 @@ function subscribe() {
 function unsubscribe() {
   return navigator.serviceWorker.ready.then(registration => {
     registration.pushManager.getSubscription().then(subscription => {
-      subscription.unsubscribe().then(successful => {
+      if (!subscription) {
+        console.info('No subscription to unsubscribe 🤷')
+        return
+      }
+      subscription.unsubscribe().then(_successful => {
         console.info('Unsubscribed from push notifications.')
       })
     })
