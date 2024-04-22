@@ -16,6 +16,9 @@
     >
   {/if}
   <span><a href="/privacy" data-sveltekit-preload-data>Privacy</a></span>
+  {#if $page.url.pathname !== '/blog'}
+    <span><a href="/blog" data-sveltekit-preload-data>Blog</a></span>
+  {/if}
 </footer>
 
 <style>
