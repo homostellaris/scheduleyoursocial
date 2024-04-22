@@ -63,7 +63,7 @@
       <Page --background={backgroundColor} bind:effect={backgroundEffect}>
         <img src={image} alt="" />
         <h1>Schedule your social</h1>
-        <h2>
+        <h2 class="font-secondary">
           <!-- TODO: Find out how to make target blank work -->
           with {#if link}<a href={link} target="_blank" class="font-secondary"
               >{host}</a
