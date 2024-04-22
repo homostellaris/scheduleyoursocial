@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-netlify": "^4.1.0",
-    "@sveltejs/kit": "^2.5.4",
+    "@sveltejs/kit": "^2.5.7",
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "ava": "^4.0.0",
     "cypress": "^13.6.4",
