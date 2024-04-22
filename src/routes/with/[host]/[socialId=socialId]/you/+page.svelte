@@ -42,7 +42,9 @@
     }
   }}
 >
-  <Datepicker bind:selected={dates} marked={organizer.dates} />
+  <div style:margin="0 auto" style:width="fit-content">
+    <Datepicker bind:selected={dates} marked={organizer.dates} />
+  </div>
   <p>👑 = days the organizer has chosen</p>
   <div style="text-align: center;">
     <Next />

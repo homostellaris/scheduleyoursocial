@@ -19,15 +19,23 @@
   $: selected = _selected.map(toDateString)
 </script>
 
-<div class="datepicker">
-  <Datepicker
-    disabled={['1970-01-01', yesterday]}
-    finishBtn={false}
-    marked={_marked}
-    pickerRule={'free'}
-    bind:selected={_selected}
-  />
-</div>
+<Datepicker
+  disabled={['1970-01-01', yesterday]}
+  finishBtn={false}
+  marked={_marked}
+  pickerRule={'free'}
+  bind:selected={_selected}
+  --praecox-calendar-custom-font-family="'Port Lligat Slab', serif"
+  --praecox-calendar-custom-number-font-family="'Port Lligat Slab', cursive"
+  --praecox-calendar-custom-font-main-color="#181818"
+  --praecox-calendar-custom-border-radius="25px"
+  --praecox-calendar-custom-inner-width="min(80vw, 230px)"
+  --praecox-calendar-custom-inner-height="min(80vw, 230px)"
+  --praecox-calendar-custom-width="calc(var(--praecox-calendar-custom-inner-width) + 48px)"
+  --praecox-calendar-custom-height="calc(var(--praecox-calendar-custom-inner-height) + 64px)"
+  --praecox-calendar-custom-background="rgba(255, 255, 255, 0.8)"
+  --praecox-calendar-custom-weekend-color="none"
+/>
 
 <style>
   :global(.calendar *) {
@@ -54,23 +62,6 @@
     );
     top: 0 !important;
     left: 0 !important;
-  }
-
-  .datepicker {
-    --praecox-calendar-custom-font-family: 'Port Lligat Slab', serif;
-    --praecox-calendar-custom-number-font-family: 'Port Lligat Slab', cursive;
-    --praecox-calendar-custom-font-main-color: #181818;
-    --praecox-calendar-custom-border-radius: 25px;
-    --praecox-calendar-custom-inner-width: min(80vw, 230px);
-    --praecox-calendar-custom-inner-height: min(80vw, 230px);
-    --praecox-calendar-custom-width: calc(
-      var(--praecox-calendar-custom-inner-width) + 48px
-    );
-    --praecox-calendar-custom-height: calc(
-      var(--praecox-calendar-custom-inner-height) + 64px
-    );
-    --praecox-calendar-custom-background: rgba(255, 255, 255, 0.8);
-    --praecox-calendar-custom-weekend-color: none;
   }
 
   :global(table tbody tr td) {
