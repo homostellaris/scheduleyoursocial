@@ -21,20 +21,12 @@
   })
 </script>
 
-<svelte:head>
-  <script
-    async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1845547317012102"
-    crossorigin="anonymous"
-  ></script>
-</svelte:head>
-
 <h1>Your social is on {friendlyDecision}</h1>
 <p>Have fun 🎉</p>
 <div style:display="flex" style:gap="0.5rem">
   <Retreat back="everyone" />
-  <Button href="https://github.com/sponsors/homostellaris" isLink external
-    >Buy me a beer 🍻*</Button
+  <Button href="https://buymeacoffee.com/homostellaris" isLink external
+    >Buy the creator a beer 🍻*</Button
   >
 </div>
 <p style:font-size="0.8rem">*Beer helps support development</p>
