@@ -106,6 +106,7 @@ describe('when a decision has been made', () => {
   it('anyone can go back and amend it', function () {
     cy.visit(`/${this.social.id}/decision`)
     cy.contains(`Your social is on ${formattedDate('1970-01-03')}`)
+    cy.wait(2000) // TODO: Get rid of this
     cy.contains('BACK').click()
     cy.contains('#best-dates', formattedDate('1970-01-02')).click()
     cy.contains('button', 'NEXT').click()
