@@ -1,14 +1,12 @@
 <script>
-  import {Button, Modal} from 'spaper'
+  import {Button, Toast} from 'spaper'
+  import ShareIcon from '$lib/ShareIcon.svelte'
   import {page} from '$app/stores'
   import {getContext} from 'svelte'
 
   const {getAnalytics} = getContext('analytics')
 
   const inviteUrl = new URL('invite', $page.url).href
-  let inviteDialogText = 'Please copy this link'
-
-  let showModal
 
   async function share() {
     try {
@@ -24,15 +22,23 @@
 
       try {
         await copy()
-        inviteDialogText = 'This link has been copied to your clipboard'
+        Toast.open({
+          message: 'Link copied to clipiboard',
+          type: 'success',
+          position: 'top',
+        })
         trackShareInviteLink('auto copy with dialog')
       } catch (error) {
         // One example of when this would happen is in some Android Webviews that don't provide copy permissions.
         console.warn('Unable to copy to clipboard', error)
-        inviteDialogText = 'Please copy this link'
+        Toast.open({
+          message: 'Sharing not available, pleaese copy the link manually',
+          type: 'warning',
+          position: 'top',
+        })
         trackShareInviteLink('manual copy with dialog')
       }
-      displayInviteUrlDialog(inviteDialogText)
+      displayInviteUrlDialog()
     }
   }
 
@@ -43,7 +49,6 @@
   }
 
   function displayInviteUrlDialog() {
-    showModal = true
     document.getElementById('invite-url').select()
   }
 
@@ -56,18 +61,22 @@
   }
 </script>
 
-<Button on:click={share} type="success">SHARE INVITE LINK</Button>
-<Modal
-  bind:active={showModal}
-  title="SHARE INVITE LINK"
-  subTitle={inviteDialogText}
->
-  <form method="dialog">
+<div>
+  <h1>Copy the invite link and wait for others to join</h1>
+  <form style:text-align="center" method="dialog">
     <input id="invite-url" readonly type="url" value={inviteUrl} />
+    <Button on:click={share} type="success">
+      <ShareIcon />
+    </Button>
   </form>
-</Modal>
+</div>
 
 <style>
+  h1 {
+    font-size: 1.61em;
+    margin: 2rem 0 1rem 0;
+  }
+
   #invite-url {
     text-align: center;
     width: 45ch;

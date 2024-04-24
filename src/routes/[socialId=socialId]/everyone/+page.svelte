@@ -113,10 +113,6 @@
 
 <StreamingStatus {status} />
 
-<h1>
-  {inviteesCount > 1 ? 'Here are the others!' : 'You are the only one here...'}
-</h1>
-<Invitees {invitees} />
 <Inviter />
 
 <p style="margin-top: 1rem;">
@@ -175,6 +171,11 @@
   </Switch>
 </Form>
 
+<h1>
+  {inviteesCount > 1 ? 'Here are the others!' : 'You are the only one here...'}
+</h1>
+<Invitees {invitees} />
+
 {#if inviteesWithDates.length > 1}
   <h1>Choose a date</h1>
   <!-- svelte-ignore missing-declaration -->
@@ -182,12 +183,13 @@
     <BestDates {invitees} bind:selected={decision} />
   </form>
 {:else}
-  <h1>Next steps</h1>
+  <!-- TODO: Maybe add this to the home page to set expectations -->
+  <!-- <h1>Next steps</h1>
   <ol>
     <li>Wait for others to join 👆</li>
     <li>See which dates everyone is available 📅</li>
     <li>Choose a date and you're done! ✅</li>
-  </ol>
+  </ol> -->
 {/if}
 
 <div style="margin: 1rem;">
@@ -205,5 +207,7 @@
 <style>
   h1 {
     align-self: center;
+    font-size: 1.61em;
+    margin: 2rem 0 0rem 0;
   }
 </style>

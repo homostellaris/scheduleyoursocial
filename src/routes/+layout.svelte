@@ -54,7 +54,7 @@
       rgba(220, 112, 0, 1) 100%
     );
     --beer: #e87c00;
-    --light-beer: rgba(255, 156, 26, 0.836);
+    --beer-light: rgba(255, 156, 26, 1);
     --good: #adff2f;
     --bad: red;
     --white: #fff;
