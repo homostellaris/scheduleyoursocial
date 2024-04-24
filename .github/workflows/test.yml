@@ -25,7 +25,9 @@ jobs:
       - run: npm ci
       - run: cp .env.template .env
       - run: cat .env >> $GITHUB_ENV
-      - run: npm run --silent db:init | jq '.[-1].secret' | awk '{print "FAUNADB_INVITEE_SECRET="$1}' >> .env
+      - run: npm run --silent db:init > .db-init.log
+      - run: cat .db-init.log | jq '.[4].secret' | awk '{print "FAUNADB_INVITEE_SECRET="$1}' >> .env
+      - run: cat .db-init.log | jq '.[6].secret' | awk '{print "FAUNADB_HOST_MANAGER_SECRET="$1}' >> .env
       - run: npx web-push generate-vapid-keys --json | jq '.publicKey' | awk '{print "VAPID_PUBLIC_KEY="$1}' >> .env
       - run: npx web-push generate-vapid-keys --json | jq '.privateKey' | awk '{print "VAPID_PRIVATE_KEY="$1}' >> .env
       - run: cat .env
