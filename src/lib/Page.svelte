@@ -33,6 +33,7 @@
     flex-grow: 1;
     justify-content: center;
     margin: auto;
+    max-width: 100vw;
     padding: 1rem;
     position: relative;
   }

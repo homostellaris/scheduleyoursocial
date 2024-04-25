@@ -61,28 +61,30 @@
   }
 </script>
 
-<div>
-  <h1>Copy the invite link and wait for others to join</h1>
-  <form style:text-align="center" method="dialog">
-    <input id="invite-url" readonly type="url" value={inviteUrl} />
-    <Button on:click={share} type="success">
-      <ShareIcon />
-    </Button>
-  </form>
-</div>
+<h1>Copy the invite link and wait for others to join</h1>
+<form style:text-align="center" method="dialog">
+  <input id="invite-url" readonly type="url" value={inviteUrl} />
+  <Button on:click={share} type="success">
+    <ShareIcon />
+  </Button>
+</form>
 
 <style>
   h1 {
     font-size: 1.61em;
-    margin: 2rem 0 1rem 0;
   }
 
-  #invite-url {
-    text-align: center;
-    width: 45ch;
+  form {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin: 1rem;
+    width: 100%;
   }
 
   input {
-    max-width: 100%;
+    flex-grow: 1;
+    max-width: 45ch;
+    text-align: center;
   }
 </style>
