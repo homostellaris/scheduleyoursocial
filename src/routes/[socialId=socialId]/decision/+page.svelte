@@ -1,8 +1,11 @@
 <script>
-  import {Button} from 'spaper'
-  import cookie from 'cookie'
+  import ShareButton from '$lib/ShareButton.svelte'
   import Retreat from '$lib/Back.svelte'
-  import {onMount} from 'svelte'
+  import cookie from 'cookie'
+  import {Button} from 'spaper'
+  import {getContext, onMount} from 'svelte'
+
+  const {getAnalytics} = getContext('analytics')
 
   export let data
 
@@ -25,8 +28,18 @@
 <p>Have fun 🎉</p>
 <div style:display="flex" style:gap="0.5rem">
   <Retreat back="everyone" />
-  <Button href="https://buymeacoffee.com/homostellaris" isLink external
-    >Buy the creator a beer 🍻*</Button
+  <Button
+    on:click={() => {
+      getAnalytics().trackEvent('Tapped buy me a beer button')
+    }}
+    href="https://buymeacoffee.com/homostellaris"
+    isLink
+    external>Buy the creator a beer 🍻*</Button
+  >
+  <ShareButton
+    url="https://scheduleyour.social?ref=decision-share"
+    shareText="The fastest way to find out when your friends are free"
+    >Spread the word</ShareButton
   >
 </div>
 <p style:font-size="0.8rem">*Beer helps support development</p>
