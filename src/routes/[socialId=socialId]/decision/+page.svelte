@@ -30,13 +30,16 @@
   <Retreat back="everyone" />
   <Button
     on:click={() => {
-      getAnalytics().trackEvent('Tapped buy me a beer button')
+      getAnalytics().trackEvent('Buy me a beer')
     }}
     href="https://buymeacoffee.com/homostellaris"
     isLink
     external>Buy the creator a beer 🍻*</Button
   >
   <ShareButton
+    on:click={() => {
+      getAnalytics().trackEvent('Spread the word')
+    }}
     url="https://scheduleyour.social?ref=decision-share"
     shareText="The fastest way to find out when your friends are free"
     >Spread the word</ShareButton

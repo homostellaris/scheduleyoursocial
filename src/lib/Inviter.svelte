@@ -2,6 +2,9 @@
   import {page} from '$app/stores'
   import ShareButton from '$lib/ShareButton.svelte'
   import {Toast} from 'spaper'
+  import {getContext} from 'svelte'
+
+  const {getAnalytics} = getContext('analytics')
 
   const inviteUrl = new URL('invite', $page.url).href
 </script>
@@ -19,6 +22,9 @@
         position: 'top',
       })
       document.getElementById('invite-url').select()
+    }}
+    on:click={() => {
+      getAnalytics().trackEvent()('Share invite link')
     }}
   />
 </form>
