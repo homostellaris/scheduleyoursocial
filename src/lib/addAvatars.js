@@ -1,5 +1,31 @@
 // TODO: Add multiple avatars per letter so that people's have unique ones
-const avatars = ['🤴', '🧙‍♂️', '👽', '🤖', '🤡', '👹', '👾', '👶', '💩']
+const avatars = [
+  '🤴',
+  '🧙‍♂️',
+  '👽',
+  '🤖',
+  '🤡',
+  '👹',
+  '👾',
+  '👶',
+  '💩',
+  '🥸',
+  '👻',
+  '😼',
+  '🥷',
+  '🧛',
+  '🧝',
+  '🦄',
+  '🐲',
+  '🐦‍🔥',
+  '🎃',
+  '🧸',
+  '🌝',
+  '⛄',
+  '🗿',
+  '🧑‍🚀',
+  '🧟',
+]
 
 function addAvatars(invitees) {
   Object.values(invitees).forEach((invitee, index) => {

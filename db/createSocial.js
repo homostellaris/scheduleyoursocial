@@ -1,3 +1,4 @@
+import {faker} from '@faker-js/faker'
 import faunadb from 'faunadb'
 import {toSocialId} from '../src/lib/id.js'
 

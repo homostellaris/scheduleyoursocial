@@ -14,19 +14,7 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-import dotenv from 'dotenv'
-dotenv.config()
-
-import faunadb from 'faunadb'
-const q = faunadb.query
-const client = new faunadb.Client({
-  domain: process.env.FAUNADB_DOMAIN,
-  port: process.env.FAUNADB_PORT,
-  scheme: process.env.FAUNADB_SCHEME,
-  secret: process.env.FAUNADB_SERVER_SECRET,
-})
-
-import {toSocialId, toDatabaseId} from '../../src/lib/id.js'
+import {create, update} from './social.js'
 
 /**
  * @type {Cypress.PluginConfig}
@@ -34,31 +22,8 @@ import {toSocialId, toDatabaseId} from '../../src/lib/id.js'
 // eslint-disable-next-line no-unused-vars
 export default (on, _config) => {
   on('task', {
-    async createSocial(data) {
-      const faunaData = {
-        data: {
-          ...faunaify(data),
-        },
-      }
-      const social = await client.query(
-        q.Create(q.Collection('social'), faunaData),
-      )
-      social.id = toSocialId(social.ref.id)
-      return social
-    },
-    async updateSocial({id, data}) {
-      const reference = toDatabaseId(id)
-      const faunaData = {
-        data: {
-          ...faunaify(data),
-        },
-      }
-
-      const response = await client.query(
-        q.Update(q.Ref(q.Collection('social'), reference), faunaData),
-      )
-      return response
-    },
+    createSocial: create,
+    updateSocial: update,
   })
 }
 
@@ -74,26 +39,4 @@ const defaultSocial = {
     },
   },
   organizer: 'organiserID',
-}
-
-function faunaify(data) {
-  let faunaData = {}
-  if (data.invitees) {
-    faunaData.invitees = Object.fromEntries(
-      Object.entries(data.invitees).map(([id, invitee]) => [
-        id,
-        {
-          name: invitee.name,
-          dates: invitee.dates.map(date => q.Date(date)),
-        },
-      ]),
-    )
-  }
-  if (data.organizer) {
-    faunaData.organizer = data.organizer
-  }
-  if (data.decision) {
-    faunaData.decision = q.Date(data.decision)
-  }
-  return faunaData
 }
