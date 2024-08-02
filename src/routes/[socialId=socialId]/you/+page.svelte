@@ -45,8 +45,10 @@
   <div style:margin="0 auto" style:width="fit-content">
     <Datepicker bind:selected={dates} marked={organizer.dates} />
   </div>
-  <p>👑 = days the organizer has chosen</p>
-  <div style="text-align: center;">
+  {#if organizer.dates.length}
+    <p style="margin: 1rem;">👑 = days the organizer has chosen</p>
+  {/if}
+  <div style="text-align: center; margin: 1rem;">
     <Next />
   </div>
   <div style="margin: 1rem;">
