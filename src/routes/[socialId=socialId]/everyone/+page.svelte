@@ -1,19 +1,20 @@
 <script>
-  import {Form, Progress, Switch} from 'spaper'
   import {goto} from '$app/navigation'
   import {page} from '$app/stores'
-  import convertDatesToStrings from '$lib/convertDatesToStrings'
-  import BestDates from '$lib/BestDates.svelte'
-  import {toDatabaseId} from '$lib/id'
-  import Next from '$lib/Next.svelte'
+  import Ads from '$lib/Ads.svelte'
   import Retreat from '$lib/Back.svelte'
+  import BestDates from '$lib/BestDates.svelte'
+  import convertDatesToStrings from '$lib/convertDatesToStrings'
+  import {toDatabaseId} from '$lib/id'
   import Invitees from '$lib/Invitees.svelte'
-  import faunadb from 'faunadb'
-  import {getContext, onMount} from 'svelte'
-  import StreamingStatus from '$lib/StreamingStatus.svelte'
   import Inviter from '$lib/Inviter.svelte'
+  import Next from '$lib/Next.svelte'
   import push from '$lib/push'
+  import StreamingStatus from '$lib/StreamingStatus.svelte'
   import cookie from 'cookie'
+  import faunadb from 'faunadb'
+  import {Form, Progress, Switch} from 'spaper'
+  import {getContext, onMount} from 'svelte'
 
   const {getAnalytics} = getContext('analytics')
 
@@ -171,10 +172,15 @@
   </Switch>
 </Form>
 
-<h1>
-  {inviteesCount > 1 ? 'Here are the others!' : 'You are the only one here...'}
-</h1>
-<Invitees {invitees} />
+{#if inviteesCount === 1}
+  <h1>Whilst you're waiting...</h1>
+{:else if inviteesCount === 2}
+  <h1>Just the two of you ❤️</h1>
+  <Invitees {invitees} />
+{:else if inviteesCount > 2}
+  <h1>{inviteesCount} people! Now we're talking 🥳</h1>
+  <Invitees {invitees} />
+{/if}
 
 {#if inviteesWithDates.length > 1}
   <h1>Choose a date</h1>
@@ -183,13 +189,7 @@
     <BestDates {invitees} bind:selected={decision} />
   </form>
 {:else}
-  <!-- TODO: Maybe add this to the home page to set expectations -->
-  <!-- <h1>Next steps</h1>
-  <ol>
-    <li>Wait for others to join 👆</li>
-    <li>See which dates everyone is available 📅</li>
-    <li>Choose a date and you're done! ✅</li>
-  </ol> -->
+  <Ads />
 {/if}
 
 <div style="margin: 1rem;">

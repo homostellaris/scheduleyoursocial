@@ -1,4 +1,5 @@
 <script>
+  import Ads from '$lib/Ads.svelte'
   import ShareButton from '$lib/ShareButton.svelte'
   import Retreat from '$lib/Back.svelte'
   import cookie from 'cookie'
@@ -28,14 +29,14 @@
 <p>Have fun 🎉</p>
 <div style:display="flex" style:gap="0.5rem">
   <Retreat back="everyone" />
-  <Button
+  <!-- <Button
     on:click={() => {
       getAnalytics().trackEvent('Buy me a beer')
     }}
     href="https://buymeacoffee.com/homostellaris"
     isLink
     external>Buy the creator a beer 🍻*</Button
-  >
+  > -->
   <ShareButton
     on:click={() => {
       getAnalytics().trackEvent('Spread the word')
@@ -45,7 +46,8 @@
     >Spread the word</ShareButton
   >
 </div>
-<p style:font-size="0.8rem">*Beer helps support development</p>
+<!-- <p style:font-size="0.8rem">*Beer helps support development</p> -->
+<Ads />
 <!-- <iframe
   src="https://github.com/sponsors/homostellaris/button"
   title="Sponsor homostellaris"

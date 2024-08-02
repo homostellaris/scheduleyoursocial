@@ -14,6 +14,7 @@
   @media (max-width: 900px) {
     .streaming-status {
       position: unset;
+      margin: 1rem;
     }
   }
 </style>

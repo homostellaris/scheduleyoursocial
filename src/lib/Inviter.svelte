@@ -9,7 +9,7 @@
   const inviteUrl = new URL('invite', $page.url).href
 </script>
 
-<h1>Copy the invite link and wait for others to join</h1>
+<h1>Share the invite link and wait for others to join</h1>
 <form style:text-align="center" method="dialog">
   <input id="invite-url" readonly type="url" value={inviteUrl} />
   <ShareButton
@@ -46,5 +46,6 @@
     flex-grow: 1;
     max-width: 45ch;
     text-align: center;
+    height: 48px;
   }
 </style>
