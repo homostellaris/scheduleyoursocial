@@ -37,7 +37,8 @@
     // TODO: Raise a PR to define exports properly so this works with Vite.
     plausible = Plausible()
     plausible.enableAutoPageviews()
-    plausible.enableAutoOutboundTracking()
+    // TODO: Find out why this stops links opening in new tabs
+    // plausible.enableAutoOutboundTracking()
   })
 </script>
 
