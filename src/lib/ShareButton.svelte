@@ -47,7 +47,7 @@
   }
 </script>
 
-<Button on:click={share} type="success">
+<Button on:click={share} on:click type="success">
   <span style:margin-right="0.2rem">
     <slot />
   </span>
