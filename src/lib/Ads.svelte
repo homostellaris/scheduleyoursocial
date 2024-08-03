@@ -1,4 +1,5 @@
 <script>
+  import amazonLogo from '$lib/amazon logo.png'
   import liquidDeath from '$lib/liquid death.jpg'
   import {getContext} from 'svelte'
 
@@ -22,12 +23,28 @@
   target="_blank"
 >
   <figure>
-    <img
-      src={liquidDeath}
-      alt="Liquid Death Still Mountain Water, 12 x 500 ml"
-      style:max-height="20vh"
+    <div
       style:margin="auto"
-    />
+      style:position="relative"
+      style:width="fit-content"
+    >
+      <img
+        src={liquidDeath}
+        alt="Liquid Death Still Mountain Water, 12 x 500 ml"
+        style:max-height="20vh"
+      />
+      <img
+        src={amazonLogo}
+        alt="Amazon logo"
+        style:background="transparent"
+        style:background-color="none"
+        style:border="none"
+        style:left="10px"
+        style:max-height="4vh"
+        style:position="absolute"
+        style:top="14px"
+      />
+    </div>
     <figcaption
       style="margin: 0.5rem; text-align: center;"
       style:font-family="'Port Lligat Slab', serif"
