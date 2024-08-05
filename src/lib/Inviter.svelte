@@ -24,7 +24,7 @@
       document.getElementById('invite-url').select()
     }}
     on:click={() => {
-      getAnalytics().trackEvent()('Share invite link')
+      getAnalytics().trackEvent('Share invite link')
     }}
   />
 </form>
