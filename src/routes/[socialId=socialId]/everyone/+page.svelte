@@ -173,7 +173,9 @@
 </Form>
 
 {#if inviteesCount === 1}
-  <h1>Whilst you're waiting...</h1>
+  <!-- <h1>Whilst you're waiting...</h1> -->
+  <h1>Waiting for others to join...</h1>
+  <Invitees {invitees} />
 {:else if inviteesCount === 2}
   <h1>Just the two of you ❤️</h1>
   <Invitees {invitees} />
@@ -189,7 +191,7 @@
     <BestDates {invitees} bind:selected={decision} />
   </form>
 {:else}
-  <Ads />
+  <!-- <Ads /> -->
 {/if}
 
 <div style="margin: 1rem;">

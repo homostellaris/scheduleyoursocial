@@ -4,34 +4,41 @@
   import {goto} from '$app/navigation'
   import Next from '$lib/Next.svelte'
   import {theme} from '$lib/theme.store'
-  import {Progress} from 'spaper'
-  import {onMount} from 'svelte'
+  import {Alert, Button, Progress} from 'spaper'
+  import {getContext, onMount} from 'svelte'
 
   let loading
   // TODO: Find a better way to do this.
   $theme.background = 'beer'
+
+  const {getAnalytics} = getContext('analytics')
 
   onMount(() => {
     document.getElementById('name').focus()
   })
 </script>
 
-<svelte:head>
-  <title>The fastest way to find out when your friends are free</title>
-  <!-- <script
-    data-name="BMC-Widget"
-    data-cfasync="false"
-    src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
-    data-id="homostellaris"
-    data-description="Support me on Buy me a coffee!"
-    data-color="#FF813F"
-    data-position="Right"
-    data-x_margin="18"
-    data-y_margin="18"
-  ></script> -->
-</svelte:head>
-
 <Page>
+  <Alert
+    dismissible
+    type="warning"
+    style="position: absolute; top: 0.5rem; width: fit-content; max-width: 95vw; gap: 0.5rem;"
+  >
+    <p style:margin={0} style:text-align="left" style="font-size: 0.8rem;">
+      🚧 We need support to keep the site running beyond May 30th. <a
+        style:font-family="'Port Lligat Slab', serif"
+        href="/blog/database-migration-funding">Learn more</a
+      >.
+    </p>
+    <Button
+      type="success"
+      size="small"
+      on:click={() => {
+        getAnalytics().trackEvent('Database migration donation button clicked')
+        document.querySelector('#bmc-wbtn').onclick()
+      }}>Donate</Button
+    >
+  </Alert>
   <Logo width={100} --margin="1rem" />
   <h1>Schedule Your Social</h1>
   <p>Let's start with your name</p>

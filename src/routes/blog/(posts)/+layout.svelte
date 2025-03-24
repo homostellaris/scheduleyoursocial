@@ -6,8 +6,8 @@
 <Page --background="white">
   <div class="content">
     <slot />
+    <Promo />
   </div>
-  <Promo />
 </Page>
 
 <style>
